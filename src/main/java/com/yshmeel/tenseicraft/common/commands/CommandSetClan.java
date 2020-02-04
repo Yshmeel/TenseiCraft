@@ -50,7 +50,7 @@ public class CommandSetClan extends CommandBase {
                 }
             }
         } else {
-            throw new CommandException("commands.tensei.simple.wrong_arguments");
+            sender.sendMessage(new TextComponentTranslation("commands.tensei.simple.wrong_arguments"));
         }
     }
 }

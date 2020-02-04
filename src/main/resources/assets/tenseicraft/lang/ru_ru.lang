@@ -1,5 +1,5 @@
 commands.tensei.simple.wrong_arguments=Недостаточно аргументов!
 commands.tensei.simple.player_not_found=Данный игрок не найден.
 commands.tensei.set_clan.clan_not_found=Данный клан не найден.
-commands.tensei.set_clan.success=&6Вы успешно выдали игроку &f%s &6клан &f%s
-commands.tensei.set_clan.success_target=&6Игрок &f%s &6выдал вам клан &f%s
+commands.tensei.set_clan.success=§6Вы успешно выдали игроку §f%s §6клан §f%s
+commands.tensei.set_clan.success_target=§6Игрок §f%s §6выдал вам клан §f%s

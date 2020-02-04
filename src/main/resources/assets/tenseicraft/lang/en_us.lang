@@ -1,0 +1,5 @@
+commands.tensei.simple.wrong_arguments=§4Wrong arguments in use
+commands.tensei.simple.player_not_found=§4This player is not found
+commands.tensei.set_clan.clan_not_found=§4Clan is not found
+commands.tensei.set_clan.success=§6You successfully given to player §f%s §6clan with name §f%s
+commands.tensei.set_clan.success_target=§6Player §f%s §6has given to you a clan with name §f%s

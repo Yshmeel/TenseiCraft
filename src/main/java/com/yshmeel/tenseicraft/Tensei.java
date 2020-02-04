@@ -17,10 +17,13 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.logging.log4j.Logger;
 
-@Mod(modid = "tensei", useMetadata = true)
+@Mod(modid = Tensei.MODID, name = Tensei.NAME, version = Tensei.VERSION)
 public class Tensei
 {
-    public static final String MODID = "tensei";
+    public static final String MODID = "tenseicraft";
+    public static final String NAME = "TenseiCraft";
+    public static final String VERSION = "1.0";
+
 
     @SidedProxy(clientSide = "com.yshmeel.tenseicraft.proxy.ClientProxy", serverSide = "com.yshmeel.tenseicraft.proxy.CommonProxy")
     public static CommonProxy proxy;

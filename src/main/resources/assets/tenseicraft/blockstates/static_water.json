@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "normal": { "model": "tenseicraft:static_water" }
+  }
+}

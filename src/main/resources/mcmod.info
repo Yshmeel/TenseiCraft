@@ -1,0 +1,17 @@
+[
+    {
+        "modid": "tenseicraft",
+        "name": "TenseiCraft",
+        "description": "tenseicraft.ru",
+        "version": "${version}",
+        "mcversion": "${mcversion}",
+        "url": "",
+        "updateUrl": "",
+        "authorList": [
+            "Yshmeel"
+        ],
+        "logoFile": "",
+        "screenshots": [],
+        "dependencies": []
+    }
+]

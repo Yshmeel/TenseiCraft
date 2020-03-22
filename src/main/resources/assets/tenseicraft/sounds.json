@@ -1,0 +1,18 @@
+{
+  "level_up": {
+    "category": "player",
+    "sounds": [ "tenseicraft:level_up" ]
+  },
+  "ninja_card_open": {
+    "category": "player",
+    "sounds": [ "tenseicraft:ninja_card_open" ]
+  },
+  "jutsu_sound": {
+    "category": "master",
+    "sounds": [ "tenseicraft:jutsu_sound" ]
+  },
+  "hmm_cutscene": {
+    "category": "master",
+    "sounds": [ "tenseicraft:hmm" ]
+  }
+}

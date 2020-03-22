@@ -1,5 +1,99 @@
+# Commands
 commands.tensei.simple.wrong_arguments=Недостаточно аргументов!
 commands.tensei.simple.player_not_found=Данный игрок не найден.
-commands.tensei.set_clan.clan_not_found=Данный клан не найден.
-commands.tensei.set_clan.success=§6Вы успешно выдали игроку §f%s §6клан §f%s
-commands.tensei.set_clan.success_target=§6Игрок §f%s §6выдал вам клан §f%s
+commands.tensei.set_level.success=§6Вы успешно установили игроку §f%s §6уровень §f%d
+commands.tensei.set_level.success_target=§6Игрок §f%s §6изменил ваш уровень на §f%d
+commands.tensei.set_exp.success=§6Вы успешно установили игроку §f%s §6опыт §f%d
+commands.tensei.set_exp.success_target=§6Игрок §f%s §6изменил ваш опыт на §f%d
+commands.tensei.add_jutsutype.success=§6Вы успешно добавили игроку §f%s §6стихию §f%s
+commands.tensei.add_jutsutype.success_target=§6Игрок §f%s §6добавил вам стихию §f%s
+
+# Common
+common.tenseicraft.level_up=§6Поздравляем, вы достигли §f%d §6уровня!
+common.tenseicraft.chakra_control.enabled=§6Вы включили контроль чакры.
+common.tenseicraft.chakra_control.disabled=§cВы выключили контроль чакры.
+common.tenseicraft.chakra_control.disabled_force=§cУ вас закончилась чакра и вы пока не можете контроллировать ее.
+common.tenseicraft.chakra_fill.disabled_force=§cВы чувствуете прилив силы. Вы перестали медитировать.
+common.tenseicraft.chakra_fill.enabled=§6Вы начали медитировать. Чакра начала пополняться быстрее.
+common.tenseicraft.chakra_fill.disabled=§cВы закончили медитировать. Чакра начала пополняться медленее.
+
+# Ranks
+common.player.ranks.villager=Житель
+
+# Ninja Card
+common.ninja_card.current_slots=Текущие слоты техник
+common.ninja_card.all_slots=Все техники
+common.ninja_card.slot=Слот
+common.ninja_card.slot_description=%nЧтобы использовать,%nнажмите комбинацию%nкнопок %2$s
+common.ninja_card.rank=Ранг
+common.ninja_card.village=Деревня
+common.ninja_card.learned_releases_title=Полученные стихии:
+common.ninja_card.stats_title=Статистика:
+common.ninja_card.learn=Изучить %n%1$s
+common.ninja_card.learn_description=%1$s%n%nНужно JP: §c%2$s
+common.ninja_card.learn_description_learned=%1$s%n%n§2Изучено.
+common.ninja_card.learn.plus_button_title=Изучить%nслед.технику
+common.ninja_card.learn.plus_button_has_jp=§2У вас хватает JP для%n§2изучения.
+common.ninja_card.learn.plus_button_hasnt_jp=§4У вас не хватает JP для%n§4изучения.
+common.ninja_card.card_btn=Карточка
+common.ninja_card.learn_jutsu_btn=Изучение стихии
+common.ninja_card.backpack_btn=Техники
+
+# Stats
+common.ninjutsu=Ниндзюцу
+common.taijutsu=Тайдзюцу
+common.speed=Скорость
+common.genjutsu=Гендзюцу
+common.jutsu_points=JP (Jutsu Points)
+common.skill_points=SP (Skill Points)
+
+# Mobs
+entity.GeninMob.name=Генин
+
+# Errors
+common.jutsu.not_enough_chakra=§cУ вас не хватает чакры чтобы использовать данную технику. Нужно §2%1$s §cчакры.
+common.tenseicraft.unexpected_error=§4Произошла ошибка в обработке информацации. Возможно что-то произошло не так. Повторите попытку еще раз, или обратитесь в техническую поддержку TenseiCraft.
+
+# JutsuTypes
+common.tensei.jutsutype.not_found=§cСтихия не найдена.
+common.jutsutypes.water=Вода
+common.jutsutypes.earth=Земля
+
+# Jutsu
+common.jutsu.water_wall=Водяная стена
+common.jutsu.water_wall_description=Создает водяную%nстену
+common.jutsu.earth_wall=Землянная стена
+common.jutsu.earth_wall_description=Создает землянную%nстену
+common.jutsu.earth_clone=Землянной клон
+common.jutsu.earth_clone_description=Создает землянного%nклона
+common.jutsu.clone.kill=Ваш клон был убит. Информация об убийстве: %1$s
+
+# Cutscenes
+cutscenes.common.next=Далее
+cutscenes.common.create=Создать
+
+# - Cutscene Tutorial
+cutscenes.tutorial.title=Мудрец шести путей
+cutscenes.tutorial.step_first.dialog_1=Привет, {username}. Добро пожаловать в мир ниндзя.%nЯ мудрец 6 путей и я буду помогатьвам развиваться в этом мире.
+cutscenes.tutorial.step_first.dialog_2=Ты попал в магическое измерение, которое повлияло на твое тело полностью.%nВ тебе пробудилась чакра.
+cutscenes.tutorial.step_first.dialog_3=Что такое чакра спросите вы%nЧакра это компонент который нужен для выполнения большинства техник ниндзя.%nЧакра протекает вместе с кровью по вашему телу.
+cutscenes.tutorial.step_first.dialog_4=Да, ваше тело подверглось изменениям.%nНо эти изменения не причинят вам боль, а только веселье.
+cutscenes.tutorial.step_first.dialog_5=Так же теперь вы можете использовать различные техники. Техники это магия.%nОни могут призывать животных, стрелять разными шарами и защищать вас. %nНо техниками не стоит пользоваться часто, ибо они расходуют вашу чакру.
+cutscenes.tutorial.step_first.dialog_6=У вас появились новые элементы на экране, хотите взглянуть?%nА хотя.. тут и спрашивать не надо.
+cutscenes.tutorial.step_second.dialog_7=Когда захотите, вы можете нажать на {ninja_card_btn} чтобы открыть вашу карточку ниндзя.%nЭто уникальная карточка, которая дается каждому ниндзя.%nОна содержит информацию о вас, там можно получать новые техники,%nулучшать свою статистику.
+cutscenes.tutorial.step_second.dialog_8=Так же по поводу статистики, вам доступно улучшение таких параметров как:%nНиндзюцу - улучшает максимальное количество чакры, тайдзюцу - улучшает навыки в бою,%nскорость - улучшает вашу скорость, гендзюцу - улучшает вашу способность к созданию иллюзий.
+cutscenes.tutorial.step_second.dialog_9=Вам нужно еще выбрать свою фамилию.%nВы можете выбрать уже готовую фамилию или же написать свою,%nно помните, нельзя писать запрещенные слова,%nиначе это карается наказанием!
+cutscenes.tutorial.step_second.dialog_10=Поздравляю с тем то что вы прошли обучение.%nТеперь вам доступен мир ниндзя.%nИ еще.. вы получите свою первую стихию и с редким шансом дополнительные улучшения(мы называем их Кеккей Генкай)%nкогда достигните 4 уровня.%nУдачи вам в выживании в мире ниндзя, я слежу за вами!
+cutscene.tutorial.showcase.bars=Красная полоска - ваше здоровье,%nраньше оно было снизу,%nно из-за изменений оно%nпереместилось наверх,%nк полоске чакры.%n%nСиняя полоска - ваша чакра.
+cutscene.tutorial.showcase.icons=Эти иконки, обозначают%nто что вы%nсейчас делаете.%n%nМедитация,%nконтроль чакры%nвсе обозначено%nздесь иконками.
+cutscene.tutorial.showcase.enter_to_continue=Нажмите Enter, чтобы продолжить
+
+# - Cutscene Register
+cutscene.register.hello_world=Привет, %1$s. Заполни информацию о себе.
+cutscene.register.last_name_select=Напиши свою фамилию здесь или выбери уже готовую из списка.
+cutscene.register.list_of_lastnames=Список готовых фамилий:
+
+# - Cutscene First Release
+cutscenes.first_release.dialog_1=Ты достиг 4 уровня? Молодец!%nТеперь ты получил свою первую стихию.%nТы можешь посмотреть ее в своей карточке ниндзя на букву {ninja_card_btn}.
+cutscenes.first_release.dialog_2=Так же теперь ты можешь прокачивать свою стихию в карточке ниндзя в разделе "Изучение стихии"%nПрокачка одной техники стоит определенное количество JP%nКоличество JP зависит от сложности техники.
+cutscenes.first_release.dialog_3=Удачи тебе с прокачкой твоей новой стихии!%nА? Как я с тобой разговариваю?%nА... я... в твоем подсознании.. да.

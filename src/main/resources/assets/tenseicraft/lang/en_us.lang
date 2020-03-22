@@ -1,5 +1,67 @@
+# Commands
 commands.tensei.simple.wrong_arguments=§4Wrong arguments in use
 commands.tensei.simple.player_not_found=§4This player is not found
-commands.tensei.set_clan.clan_not_found=§4Clan is not found
-commands.tensei.set_clan.success=§6You successfully given to player §f%s §6clan with name §f%s
-commands.tensei.set_clan.success_target=§6Player §f%s §6has given to you a clan with name §f%s
+commands.tensei.set_level.success=§6You successfully set player §f%s §6level to §f%d
+commands.tensei.set_level.success_target=§6Player §f%s §6has changed your level to §f%d
+commands.tensei.set_exp.success=§6You successfully set player §f%s §6exp to §f%d
+commands.tensei.set_exp.success_target=§6Player §f%s §6has changed your exp to §f%d
+commands.tensei.add_jutsutype.success=§6You successfully added to player §f%s §6release §f%s
+commands.tensei.add_jutsutype.success_target=§6Player §f%s §6has added to you a release §f%s
+
+# Common
+common.tenseicraft.chakra_control.enabled=§6You have turned on an chakra control.
+common.tenseicraft.chakra_control.disabled=§cYou have turned off an chakra control.
+common.tenseicraft.chakra_control.disabled_force=§cYou chakra on limit. Please fill it.
+common.tenseicraft.chakra_fill.disabled_force=§cYou feeling a power of full chakra. You have stop meditating.
+common.tenseicraft.chakra_fill.enabled=§6You have started to meditate. You feeling that you chakra is filling fast than usually.
+common.tenseicraft.chakra_fill.disabled=§cYou have done with meditate. Chakra started filling slow as usually.
+common.tenseicraft.level_up=§6Congrats, you reached §f%d §6level!
+
+# Ranks
+common.player.ranks.villager=Villager
+
+# Ninja Card
+common.ninja_card.current_slots=Current slots of jutsu
+common.ninja_card.all_slots=All jutsu
+common.ninja_card.slot=Slot
+common.ninja_card.slot_description=%nFor use,%npress a%ncombination of%nbuttons %2$s
+common.ninja_card.rank=Rank
+common.ninja_card.learned_releases_title=Releases:
+common.ninja_card.stats_title=Statistics:
+common.ninja_card.village=Village
+common.ninja_card.learn=Learn %n%1$s
+common.ninja_card.learn_description=%1$s%n%nJP: §c%2$s
+common.ninja_card.learn_description_learned=%1$s%n%n§2Learned.
+common.ninja_card.learn.plus_button_title=Learn%nnext jutsu
+common.ninja_card.learn.plus_button_has_jp=§2You have enough JP%n§2to learn.
+common.ninja_card.learn.plus_button_hasnt_jp=§4You don't have enough%n§4JP to learn.
+common.ninja_card.card_btn=Info
+common.ninja_card.learn_jutsu_btn=Releases
+common.ninja_card.backpack_btn=Jutsu
+
+# Stats
+common.jutsu_points=JP (Jutsu Points)
+common.skill_points=SP (Skill Points)
+common.ninjutsu=Ninjutsu
+common.taijutsu=Taijutsu
+common.speed=Speed
+common.genjutsu=Genjutsu
+
+# Mobs
+entity.GeninMob.name=Genin
+
+# Errors
+common.jutsu.not_enough_chakra=§cYou don't have enough chakra to use this jutsu. You need §2%1$s §cchakra.
+common.tenseicraft.unexpected_error=§4An error was excepted while managing data, maybe something went wrong. Try again later, or text this probrem in tech support of TenseiCraft.
+
+# JutsuTypes
+common.tensei.jutsutype.not_found=§cThis release is not found.
+common.jutsutypes.water=Water
+common.jutsutypes.earth=Earth
+
+# Jutsu
+common.jutsu.water_wall=Water wall
+common.jutsu_water_wall_description=Creates a water wall
+common.jutsu.earth_wall=Earth wall
+common.jutsu_earth_wall_description=Creates a earth wall
+common.jutsu.clone.kill=Your clone was dead. Info: %1$s

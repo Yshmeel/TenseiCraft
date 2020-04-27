@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.entity.layers.LayerEntityOnShoulder;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHandSide;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
@@ -30,15 +31,16 @@ public class EyesLayer implements LayerRenderer<EntityPlayer>
     public void doRenderLayer(EntityPlayer player, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale)
     {
         IGenkai sharingan = ModInfo.getGenkai("sharingan");
-        this.playerRenderer.bindTexture(sharingan.getEyes()[0]);
-        GlStateManager.pushMatrix();
         this.playerRenderer.getMainModel().bipedHead.renderWithRotation(0.001F);;
-        GlStateManager.popMatrix();
+        for(int i = 0; i <= 1; i++) {
+            this.playerRenderer.bindTexture(sharingan.getEyes()[0]);
+            this.playerRenderer.getMainModel().bipedHead.renderWithRotation(0.001F);;
+        }
     }
 
     @Override
     public boolean shouldCombineTextures()
     {
-        return true;
+        return false;
     }
 }

@@ -163,7 +163,7 @@ public class ClientHandler {
     }
 
     @SubscribeEvent
-    public void renderPlayerPost(RenderLivingEvent.Pre<AbstractClientPlayer> event) {
+    public void renderPlayerPost(RenderLivingEvent.Pre event) {
         if(event.getEntity() instanceof EntityPlayer) {
             event.getRenderer().addLayer(new EyesLayer((RenderPlayer) event.getRenderer()));
         }

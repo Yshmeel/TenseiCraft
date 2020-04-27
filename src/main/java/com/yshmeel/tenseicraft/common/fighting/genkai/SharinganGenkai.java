@@ -10,7 +10,7 @@ public class SharinganGenkai extends Genkai {
         this.setId("sharingan");
         this.setName("common.genkai.sharingan");
         this.setEyes(new ResourceLocation[] {
-            new ResourceLocation(Tensei.MODID, "textures/player/test_eye.png")
+            new ResourceLocation(Tensei.MODID, "textures/player/test_eye2.png")
         });
 
         super.init();

@@ -169,9 +169,9 @@ public class NinjaCard extends GuiScreen {
 
             this.renderJutsuTooltip(additionalJutsuX, y + 5,
                     I18n.format("common.ninja_card.learn", I18n.format(jutsuData.getName())),
-                        I18n.format((player.isJutsuLearned(jutsuData.getId()) ? "common.ninja_card.learn_description_learned" :
-                                        "common.ninja_card.learn_description"),
-                                I18n.format(jutsuData.getDescription()), jutsuData.getPointsLearn()), 12, 12);
+                    I18n.format((player.isJutsuLearned(jutsuData.getId()) ? "common.ninja_card.learn_description_learned" :
+                                    "common.ninja_card.learn_description"),
+                            I18n.format(jutsuData.getDescription()), jutsuData.getPointsLearn()), 12, 12);
 
             additionalJutsuX += 20;
         }
@@ -192,7 +192,7 @@ public class NinjaCard extends GuiScreen {
                             player.getJutsuPoints() >= nextJutsu.getPointsLearn() ?
                                     "common.ninja_card.learn.plus_button_has_jp" :
                                     "common.ninja_card.learn.plus_button_hasnt_jp"
-                            )), 16, 16);
+                    )), 16, 16);
 
             if(this.updateCooldown == 0 && isClicked && (this.mouseX > plusButtonX && this.mouseX < plusButtonX + 16
                     && this.mouseY > plusButtonY && this.mouseY < plusButtonY + 16)) {
@@ -335,7 +335,7 @@ public class NinjaCard extends GuiScreen {
 
     public void renderInfo(IPlayer player) {
         Minecraft.getMinecraft().getTextureManager().bindTexture(
-            this.skin
+                this.skin
         );
 
         GL11.glPushMatrix();
@@ -391,7 +391,7 @@ public class NinjaCard extends GuiScreen {
 
         this.renderInfoStat("common.ninjutsu", player.getNinjutsu(), () -> {
             PacketDispatcher.sendToServer(
-                new PacketUpdateStatsMessage("ninjutsu")
+                    new PacketUpdateStatsMessage("ninjutsu")
             );
         }, ((this.CONTAINER_SECTION_POS[0]*2) + 50), this.CONTAINER_SECTION_POS[1] + 60);
 

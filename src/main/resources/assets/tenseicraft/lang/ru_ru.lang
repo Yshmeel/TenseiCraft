@@ -38,6 +38,7 @@ common.ninja_card.learn.plus_button_hasnt_jp=§4У вас не хватает JP
 common.ninja_card.card_btn=Карточка
 common.ninja_card.learn_jutsu_btn=Изучение стихии
 common.ninja_card.backpack_btn=Техники
+common.ninja_card.learns_not_found=У вас нет никаких стихий!%nДойдите до 4 уровня чтобы получить свою первую стихию.
 
 # Stats
 common.ninjutsu=Ниндзюцу

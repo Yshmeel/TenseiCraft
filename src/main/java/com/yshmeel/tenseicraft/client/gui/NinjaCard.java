@@ -17,7 +17,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
@@ -31,8 +30,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class NinjaCard extends GuiScreen {
-    private int guiX;
-    private int guiY;
     private int[] BUTTON_SECTION_POS = {0, 0};
     private int[] CONTAINER_SECTION_POS = {0, 0};
     private int mouseX = 0;
@@ -60,19 +57,6 @@ public class NinjaCard extends GuiScreen {
         AbstractClientPlayer.getDownloadImageSkin(this.skin, Minecraft.getMinecraft().player.getName());
     }
 
-
-    public void initGui() {
-        ScaledResolution resolution = new ScaledResolution(Minecraft.getMinecraft());
-        int xSize = 384;
-        int ySize = 292;
-        float scale = 1.0F;
-
-        guiX = (Math.round((width / 2) / scale) - Math.round(xSize / 2));
-        guiY = (Math.round((height / 2) / scale) - Math.round(ySize / 2));
-        CONTAINER_SECTION_POS[0] = guiX - 10;
-        CONTAINER_SECTION_POS[1] = guiY + 36;
-    }
-
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         super.drawScreen(mouseX, mouseY, partialTicks);
         this.drawDefaultBackground();
@@ -88,11 +72,13 @@ public class NinjaCard extends GuiScreen {
         int mcHeight = Minecraft.getMinecraft().displayHeight;
         this.scrollAllHeight = ((resolution.getScaledHeight()+mcHeight)/6)+76;
         this.drawDefaultBackground();
+        int guiX = (resolution.getScaledWidth() / 4) + 5;
+        int guiY = resolution.getScaledHeight() / 6;
         GL11.glColor4f((float) 1.0f, (float) 1.0f, (float) 1.0f, (float) 1.0f);
         this.mc.renderEngine.bindTexture(this.texture);
         this.drawModalRectWithCustomSizedTexture(guiX, guiY, 0, 0, 384, 292, 384, 292);
 
-        BUTTON_SECTION_POS[0] = guiX - 30;
+        BUTTON_SECTION_POS[0] = guiX - 50;
         BUTTON_SECTION_POS[1] = guiY + 6;
 
         CONTAINER_SECTION_POS[0] = guiX - 10;
@@ -110,37 +96,37 @@ public class NinjaCard extends GuiScreen {
     }
 
     public void renderButtons() {
-        new Button(this.BUTTON_SECTION_POS[0], this.BUTTON_SECTION_POS[1] - 8, I18n.format("common.ninja_card.card_btn"),
+        new Button(this.BUTTON_SECTION_POS[0], this.BUTTON_SECTION_POS[1], I18n.format("common.ninja_card.card_btn"),
                 () -> {
                     this.currentTab = "info";
                 }, (this.currentTab.equals("info")), this.mouseX, this.mouseY, isClicked, 30).render();
 
-        new Button(this.BUTTON_SECTION_POS[0] + 80, this.BUTTON_SECTION_POS[1] - 8, I18n.format("common.ninja_card.learn_jutsu_btn"),
+        new Button(this.BUTTON_SECTION_POS[0] + 80, this.BUTTON_SECTION_POS[1], I18n.format("common.ninja_card.learn_jutsu_btn"),
                 () -> {
                     this.currentTab = "jutsu_learn";
-                }, (this.currentTab.equals("jutsu_learn")), this.mouseX, this.mouseY, isClicked, 15).render();
+                }, (this.currentTab.equals("jutsu_learn")), this.mouseX, this.mouseY, isClicked, 0).render();
 
-        new Button(this.BUTTON_SECTION_POS[0] + 160, this.BUTTON_SECTION_POS[1] - 8, I18n.format("common.ninja_card.backpack_btn"),
+        new Button(this.BUTTON_SECTION_POS[0] + 160, this.BUTTON_SECTION_POS[1], I18n.format("common.ninja_card.backpack_btn"),
                 () -> {
                     this.currentTab = "jutsu_backpack";
                 }, (this.currentTab.equals("jutsu_backpack")), this.mouseX, this.mouseY, isClicked, 35).render();
     }
 
     public void renderBackpack(IPlayer player) {
-        DrawFonts.Draw.drawString(this.CONTAINER_SECTION_POS[0] + 30, this.CONTAINER_SECTION_POS[1] + 45,
+        DrawFonts.Draw.drawString(this.CONTAINER_SECTION_POS[0] + 35, this.CONTAINER_SECTION_POS[1] + 45,
                 I18n.format("common.ninja_card.current_slots"), 14, 0xFF000000,
                 Tensei.fonts.getFont("naruto"), false, true);
 
         GL11.glPushMatrix();
-        this.renderSlotsHotbar(this.CONTAINER_SECTION_POS[0] + 30, this.CONTAINER_SECTION_POS[1] + 65, player);
+        this.renderSlotsHotbar(this.CONTAINER_SECTION_POS[0] + 35, this.CONTAINER_SECTION_POS[1] + 65, player);
         GL11.glPopMatrix();
 
-        DrawFonts.Draw.drawString(this.CONTAINER_SECTION_POS[0] + 30, this.CONTAINER_SECTION_POS[1] + 105,
+        DrawFonts.Draw.drawString(this.CONTAINER_SECTION_POS[0] + 35, this.CONTAINER_SECTION_POS[1] + 105,
                 I18n.format("common.ninja_card.all_slots"), 14, 0xFF000000,
                 Tensei.fonts.getFont("naruto"), false, true);
 
         GL11.glPushMatrix();
-        this.renderAllSlots(this.CONTAINER_SECTION_POS[0] + 30, this.CONTAINER_SECTION_POS[1] + 130, player);
+        this.renderAllSlots(this.CONTAINER_SECTION_POS[0] + 35, this.CONTAINER_SECTION_POS[1] + 130, player);
         GL11.glPopMatrix();
     }
 
@@ -149,13 +135,6 @@ public class NinjaCard extends GuiScreen {
 
         int x = this.CONTAINER_SECTION_POS[0] + 14;
         int y = this.CONTAINER_SECTION_POS[1] + 45;
-
-        if(player.putJutsuTypesToArrayList().size() == 0) {
-            DrawFonts.Draw.drawString(x + 15, y + 25,
-                    String.format(I18n.format("common.ninja_card.learns_not_found")),
-                    14, 0xFF000000, Tensei.fonts.getFont("naruto"), false, true);
-        }
-
 
         for(HashMap.Entry<String, IJutsuType> entry : ModInfo.jutsuTypes.entrySet()) {
             IJutsuType release = entry.getValue();
@@ -282,7 +261,7 @@ public class NinjaCard extends GuiScreen {
                             i, JutsuSlots.valueOf("SLOT" + i).getKeyboardKeys())), 30, 33);
 
 
-            additionalMargin += 61;
+            additionalMargin += 60;
         }
     }
 
@@ -291,6 +270,7 @@ public class NinjaCard extends GuiScreen {
         int additionalY = 0;
         ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
         int mcWidth = Minecraft.getMinecraft().displayWidth;
+        int mcHeight = Minecraft.getMinecraft().displayHeight;
         int currentXDefault = ((sr.getScaledWidth()+mcWidth)/6)-(128/3)-142;
         int currentX = currentXDefault;
         int boxWidth = 30;
@@ -346,8 +326,7 @@ public class NinjaCard extends GuiScreen {
             this.renderTooltip(buttonX, buttonY, I18n.format(jutsu.getName()),
                     I18n.format(jutsu.getDescription()), 30, 33);
 
-            additionalMargin += 61;
-            additionalMargin += 61;
+            additionalMargin += 60;
         }
 
         GL11.glDisable(GL11.GL_SCISSOR_TEST);
@@ -355,10 +334,8 @@ public class NinjaCard extends GuiScreen {
     }
 
     public void renderInfo(IPlayer player) {
-
-        // render left side
         Minecraft.getMinecraft().getTextureManager().bindTexture(
-            this.skin
+                this.skin
         );
 
         GL11.glPushMatrix();
@@ -372,6 +349,7 @@ public class NinjaCard extends GuiScreen {
 
         GL11.glPopMatrix();
 
+        // render left side
         DrawFonts.Draw.drawString(this.CONTAINER_SECTION_POS[0] + 35, this.CONTAINER_SECTION_POS[1] + 100,
                 Minecraft.getMinecraft().player.getName() + " " + player.getLastName(), 14, 0xFF000000,
                 Tensei.fonts.getFont("naruto"), false, true);
@@ -407,54 +385,51 @@ public class NinjaCard extends GuiScreen {
         // render left side ends
 
         // render right side
-        int rightSideX = (this.CONTAINER_SECTION_POS[0]*2) + 118;
-        int rightSideY = this.CONTAINER_SECTION_POS[1] + 40;
-
-        DrawFonts.Draw.drawString(rightSideX, rightSideY,
+        DrawFonts.Draw.drawString((this.CONTAINER_SECTION_POS[0]*2) + 50, this.CONTAINER_SECTION_POS[1] + 40,
                 I18n.format("common.ninja_card.stats_title"), 20, 0xFF968300,
                 Tensei.fonts.getFont("naruto"), false, true);
 
         this.renderInfoStat("common.ninjutsu", player.getNinjutsu(), () -> {
             PacketDispatcher.sendToServer(
-                new PacketUpdateStatsMessage("ninjutsu")
+                    new PacketUpdateStatsMessage("ninjutsu")
             );
-        }, rightSideX, rightSideY + 20);
+        }, ((this.CONTAINER_SECTION_POS[0]*2) + 50), this.CONTAINER_SECTION_POS[1] + 60);
 
         this.renderInfoStat("common.taijutsu", player.getTaijutsu(), () -> {
             PacketDispatcher.sendToServer(
                     new PacketUpdateStatsMessage("taijutsu")
             );
-        }, rightSideX, rightSideY + 40);
+        }, ((this.CONTAINER_SECTION_POS[0]*2) + 50), this.CONTAINER_SECTION_POS[1] + 80);
 
         this.renderInfoStat("common.speed", player.getSpeed(), () -> {
             PacketDispatcher.sendToServer(
                     new PacketUpdateStatsMessage("speed")
             );
-        }, rightSideX, rightSideY + 60);
+        }, ((this.CONTAINER_SECTION_POS[0]*2) + 50), this.CONTAINER_SECTION_POS[1] + 100);
 
         this.renderInfoStat("common.genjutsu", player.getGenjutsu(), () -> {
             PacketDispatcher.sendToServer(
                     new PacketUpdateStatsMessage("genjutsu")
             );
-        }, rightSideX, rightSideY + 80);
+        }, ((this.CONTAINER_SECTION_POS[0]*2) + 50), this.CONTAINER_SECTION_POS[1] + 120);
 
-        GL11.glColor3f(255,255, 255);
-        Gui.drawRect(rightSideX, rightSideY + 140,
-                rightSideX + 135, rightSideY + 141, 1711276032);
+        GL11.glColor3f(255, 255, 255);
+        Gui.drawRect(((this.CONTAINER_SECTION_POS[0]*2) + 50), this.CONTAINER_SECTION_POS[1] + 180,
+                ((this.CONTAINER_SECTION_POS[0]*2) + 50) + 133, this.CONTAINER_SECTION_POS[1] + 181, 1711276032);
 
-        DrawFonts.Draw.drawString(rightSideX, rightSideY + 155,
+        DrawFonts.Draw.drawString(((this.CONTAINER_SECTION_POS[0]*2) + 50), this.CONTAINER_SECTION_POS[1] + 195,
                 I18n.format("common.jutsu_points"), 14, 1711276032,
                 Tensei.fonts.getFont("naruto"), false, true);
 
-        DrawFonts.Draw.drawString(rightSideX + 130, rightSideY + 155,
+        DrawFonts.Draw.drawString(((this.CONTAINER_SECTION_POS[0]*2) + 50) + 127, this.CONTAINER_SECTION_POS[1] + 195,
                 String.valueOf(player.getJutsuPoints()), 14, 0xFF968300,
                 Tensei.fonts.getFont("naruto"), false, true);
 
-        DrawFonts.Draw.drawString(rightSideX, rightSideY + 168,
+        DrawFonts.Draw.drawString(((this.CONTAINER_SECTION_POS[0]*2) + 50), this.CONTAINER_SECTION_POS[1] + 208,
                 I18n.format("common.skill_points"), 14, 1711276032,
                 Tensei.fonts.getFont("naruto"), false, true);
 
-        DrawFonts.Draw.drawString(rightSideX + 130, rightSideY + 168,
+        DrawFonts.Draw.drawString(((this.CONTAINER_SECTION_POS[0]*2) + 50) + 127, this.CONTAINER_SECTION_POS[1] + 208,
                 String.valueOf(player.getSkillPoints()), 14, 0xFF968300,
                 Tensei.fonts.getFont("naruto"), false, true);
     }

@@ -17,6 +17,7 @@ import org.lwjgl.opengl.GL11;
 
 import java.io.IOException;
 import java.util.Random;
+import java.util.concurrent.Callable;
 
 public class TutorialCutScene extends GuiScreen {
     public String[] firstDialogues = {

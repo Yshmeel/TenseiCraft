@@ -7,6 +7,7 @@ import com.yshmeel.tenseicraft.common.packets.PacketDispatcher;
 import com.yshmeel.tenseicraft.common.packets.PacketLevelUpMessage;
 import com.yshmeel.tenseicraft.common.packets.PacketShowCutSceneMessage;
 import com.yshmeel.tenseicraft.common.packets.PacketSyncPlayerDataMessage;
+import com.yshmeel.tenseicraft.common.quests.base.IQuest;
 import com.yshmeel.tenseicraft.data.GensEnum;
 import com.yshmeel.tenseicraft.data.ModInfo;
 import net.minecraft.client.resources.I18n;
@@ -20,6 +21,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 
@@ -51,9 +53,11 @@ public class Player implements IPlayer {
     private NBTTagCompound jutsuSlots = new NBTTagCompound();
     private int jutsuPoints = 0;
     private int skillPoints = 0;
+    private NBTTagCompound quest = new NBTTagCompound();
+    private String questId = "";
 
     /* Timers */
-    private int chakraFillTimer = 0; // fills to 60, reset
+    private int chakraFillTimer = 0; // fills to 30, then reset
 
     @Override
     public void consumeChakra(double chakraAmount) {
@@ -528,6 +532,43 @@ public class Player implements IPlayer {
     }
 
     @Override
+    public NBTTagCompound getQuest() {
+        return this.quest;
+    }
+
+    @Override
+    public boolean assignQuest(IQuest quest) {
+        this.questId = quest.getId();
+        this.quest = quest.getQuestObject(this);
+        this.syncServerToClient();
+        return true;
+    }
+
+    @Override
+    public boolean hasQuest() {
+        return quest == null;
+    }
+
+    @Override
+    public boolean resetQuest() {
+        this.quest = null;
+        this.questId = "";
+        this.syncServerToClient();
+        return true;
+    }
+
+    @Override
+    public String getQuestId() {
+        return this.questId;
+    }
+
+    @Override
+    public boolean setQuestId(String value) {
+        this.questId = value;
+        return true;
+    }
+
+    @Override
     public void set(NBTTagCompound tag) {
         this.chakraAmount = tag.getDouble("chakraAmount");
         this.rank = tag.getInteger("rank");
@@ -548,6 +589,8 @@ public class Player implements IPlayer {
         this.jutsuSlots = tag.getCompoundTag("jutsuSlots");
         this.lastName = tag.getString("lastName");
         this.registered = tag.getBoolean("registered");
+        this.quest = tag.getCompoundTag("quest");
+        this.questId = tag.getString("questId");
         this.dataFilled = true;
     }
 
@@ -574,6 +617,8 @@ public class Player implements IPlayer {
         compound.setInteger("skillPoints", this.skillPoints);
         compound.setString("lastName", this.lastName);
         compound.setBoolean("registered", this.registered);
+        compound.setTag("quest", this.quest);
+        compound.setString("questId", this.questId);
 
         return compound;
     }

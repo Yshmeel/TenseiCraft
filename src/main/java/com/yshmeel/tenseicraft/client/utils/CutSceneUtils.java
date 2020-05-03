@@ -3,6 +3,7 @@ package com.yshmeel.tenseicraft.client.utils;
 import com.yshmeel.tenseicraft.Tensei;
 import com.yshmeel.tenseicraft.client.Keys;
 import com.yshmeel.tenseicraft.client.cutscenes.FirstReleaseCutScene;
+import com.yshmeel.tenseicraft.client.cutscenes.IrukaTutorialCutScene;
 import com.yshmeel.tenseicraft.client.cutscenes.TutorialCutScene;
 import com.yshmeel.tenseicraft.client.gui.fonts.DrawFonts;
 import net.minecraft.client.Minecraft;
@@ -12,6 +13,8 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
+
+import java.util.concurrent.Callable;
 
 public class CutSceneUtils {
     public static boolean hasActiveCutscene = false;
@@ -65,6 +68,10 @@ public class CutSceneUtils {
     }
 
     public static void showCutScene(String cutSceneId) {
+        showCutScene(cutSceneId, null);
+    }
+
+    public static void showCutScene(String cutSceneId, Callable onEnd) {
         hasActiveCutscene = true;
         switch(cutSceneId) {
             case "tutorial":
@@ -82,6 +89,15 @@ public class CutSceneUtils {
                         Minecraft.getMinecraft().displayGuiScreen(new FirstReleaseCutScene(activeCutSceneDialogId));
                     } else {
                         Minecraft.getMinecraft().displayGuiScreen(new FirstReleaseCutScene());
+                    }
+                }
+                break;
+            case "iruka_tutorial":
+                if(!(Minecraft.getMinecraft().currentScreen instanceof IrukaTutorialCutScene)) {
+                    if(activeCutSceneDialogId != -1) {
+                        Minecraft.getMinecraft().displayGuiScreen(new IrukaTutorialCutScene(activeCutSceneDialogId));
+                    } else {
+                        Minecraft.getMinecraft().displayGuiScreen(new IrukaTutorialCutScene(onEnd));
                     }
                 }
                 break;

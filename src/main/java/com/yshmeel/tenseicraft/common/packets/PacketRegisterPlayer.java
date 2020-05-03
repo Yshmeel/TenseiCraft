@@ -41,6 +41,10 @@ public class PacketRegisterPlayer  extends AbstractMessage<PacketRegisterPlayer>
                 if(!data.isRegistered()) {
                     data.setChakraControlEnabled(false);
                     data.setLastName(this.lastName);
+                    data.setNinjutsu(1);
+                    data.setTaijutsu(0);
+                    data.setGenjutsu(0);
+                    data.setSpeed(0);
                     data.setRegistered(true);
                     Tensei.logger.info("[Tensei} Player " + player.getName() + " was registered on server!");
                 } else {

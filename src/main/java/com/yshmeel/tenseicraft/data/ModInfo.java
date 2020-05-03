@@ -2,27 +2,22 @@ package com.yshmeel.tenseicraft.data;
 
 import com.yshmeel.tenseicraft.Tensei;
 import com.yshmeel.tenseicraft.common.entities.GeninMob;
-import com.yshmeel.tenseicraft.common.entities.models.DefaultModel;
-import com.yshmeel.tenseicraft.common.entities.renders.DefaultRender;
+import com.yshmeel.tenseicraft.common.entities.NPCMob;
 import com.yshmeel.tenseicraft.common.fighting.genkai.IGenkai;
 import com.yshmeel.tenseicraft.common.fighting.genkai.SharinganGenkai;
 import com.yshmeel.tenseicraft.common.fighting.jutsu.IJutsu;
 import com.yshmeel.tenseicraft.common.fighting.jutsu.Jutsu;
-import com.yshmeel.tenseicraft.common.fighting.jutsu.earth.EarthCloneJutsu;
-import com.yshmeel.tenseicraft.common.fighting.jutsu.entities.clones.RenderClone;
 import com.yshmeel.tenseicraft.common.fighting.jutsutype.EarthJutsuType;
 import com.yshmeel.tenseicraft.common.fighting.jutsutype.IJutsuType;
 import com.yshmeel.tenseicraft.common.fighting.jutsutype.WaterJutsuType;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ModelPlayer;
+import com.yshmeel.tenseicraft.common.quests.base.IQuest;
+import com.yshmeel.tenseicraft.data.quests.HelloWorldQuest;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
@@ -40,6 +35,7 @@ public class ModInfo {
     public static HashMap<String, IJutsuType> jutsuTypes = new HashMap<>();
     public static HashMap<String, IJutsu> jutsu = new HashMap<>();
     public static HashMap<String, IGenkai> genkai = new HashMap<>();
+    public static HashMap<String, IQuest> quests = new HashMap<>();
     public static int entityIds = 0;
 
     public static void initJutsuTypes() {
@@ -108,6 +104,25 @@ public class ModInfo {
         }
     }
 
+    public static void initQuests() {
+        quests.put("hello_world", new HelloWorldQuest());
+
+        for (HashMap.Entry<String, IQuest> keyValue : quests.entrySet()) {
+            keyValue.getValue().init();
+
+            Tensei.logger.info(String.format("[Tensei] Quest %s was registered", keyValue.getValue().getId()));
+        }
+    }
+
+    public static IQuest getQuest(String questId) {
+        if(quests.get(questId) == null) {
+            return null;
+        } else {
+            return quests.get(questId);
+        }
+    }
+
+
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
     public static void onRegisterModels(ModelRegistryEvent event) {
@@ -119,6 +134,7 @@ public class ModInfo {
         ModInfo.initJutsuTypes();
         ModInfo.initJutsu();
         ModInfo.initGenkai();
+        ModInfo.initQuests();
 
         event.getRegistry().register(
             EntityEntryBuilder.<Entity>create()
@@ -129,7 +145,17 @@ public class ModInfo {
                     .build()
         );
 
+        event.getRegistry().register(
+                EntityEntryBuilder.<Entity>create()
+                        .entity(NPCMob.class)
+                        .id(new ResourceLocation("tenseicraft:null2"), entityIds++)
+                        .name("NPCMob")
+                        .tracker(64, 3, true)
+                        .build()
+        );
+
         EntitySpawnPlacementRegistry.setPlacementType(GeninMob.class, EntityLiving.SpawnPlacementType.ON_GROUND);
+        EntitySpawnPlacementRegistry.setPlacementType(NPCMob.class, EntityLiving.SpawnPlacementType.ON_GROUND);
 
         HashMap<String, IJutsu> jutsus = ModInfo.jutsu;
 

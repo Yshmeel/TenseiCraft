@@ -23,9 +23,6 @@ public class DefaultRender extends RenderLiving
     @Override
     protected void preRenderCallback(EntityLivingBase entity, float f)
     {
-        EntityMob entityMob = (EntityMob) entity;
-
-        // @todo
     }
 
     /**

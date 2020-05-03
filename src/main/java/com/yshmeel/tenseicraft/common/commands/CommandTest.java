@@ -1,12 +1,14 @@
 package com.yshmeel.tenseicraft.common.commands;
 
 import com.yshmeel.tenseicraft.common.entities.GeninMob;
+import com.yshmeel.tenseicraft.common.entities.NPCMob;
 import com.yshmeel.tenseicraft.common.fighting.jutsu.IJutsu;
 import com.yshmeel.tenseicraft.common.fighting.jutsu.Jutsu;
 import com.yshmeel.tenseicraft.data.ModInfo;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
@@ -32,7 +34,7 @@ public class CommandTest  extends CommandBase {
             switch(type) {
                 case 0:
                     BlockPos pos  = sender.getCommandSenderEntity().getPosition();
-                    EntityMob mobToSpawn = new GeninMob(sender.getEntityWorld());
+                    EntityCreature mobToSpawn = new NPCMob(sender.getEntityWorld());
                     mobToSpawn.setPositionAndUpdate(pos.getX(), pos.getY(), pos.getZ());
                     sender.getEntityWorld().spawnEntity(
                         mobToSpawn

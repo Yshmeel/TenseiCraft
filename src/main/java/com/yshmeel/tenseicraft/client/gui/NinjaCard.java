@@ -136,6 +136,13 @@ public class NinjaCard extends GuiScreen {
         int x = this.CONTAINER_SECTION_POS[0] + 14;
         int y = this.CONTAINER_SECTION_POS[1] + 45;
 
+        if(player.putJutsuTypesToArrayList().size() == 0) {
+            DrawFonts.Draw.drawString(x + 20, y, I18n.format("common.ninja_card.learns_not_found"),
+                    16, 0xFF000000,
+                    Tensei.fonts.getFont("naruto"), false, true);
+            return;
+        }
+
         for(HashMap.Entry<String, IJutsuType> entry : ModInfo.jutsuTypes.entrySet()) {
             IJutsuType release = entry.getValue();
 

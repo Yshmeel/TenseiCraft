@@ -1,10 +1,12 @@
 package com.yshmeel.tenseicraft.data.player;
 
 import com.yshmeel.tenseicraft.common.fighting.jutsutype.IJutsuType;
+import com.yshmeel.tenseicraft.common.quests.base.IQuest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public interface IPlayer {
     String lastName = "";
@@ -110,7 +112,6 @@ public interface IPlayer {
     /* Fighting system ends */
 
     /* Learning system */
-
     public void setJutsuPoints(int jutsuPoints);
     public void addJutsuPoints(int jutsuPoints);
     public int getJutsuPoints();
@@ -118,8 +119,16 @@ public interface IPlayer {
     public void setSkillPoints(int value);
     public void addSkillPoints(int value);
     public int getSkillPoints();
-
     /* Learning system ends */
+
+    /* Quest system start */
+    public NBTTagCompound getQuest();
+    public boolean assignQuest(IQuest quest);
+    public boolean hasQuest();
+    public boolean resetQuest();
+    public String getQuestId();
+    public boolean setQuestId(String value);
+    /* Quest system end */
 
     /* Main Methods */
     public void set(NBTTagCompound tag);

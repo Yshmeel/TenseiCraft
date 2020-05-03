@@ -78,6 +78,7 @@ public class Tensei
             event.registerServerCommand(new CommandTest());
             event.registerServerCommand(new CommandAddJutsuType());
             event.registerServerCommand(new CommandAddLearnedJutsu());
+            event.registerServerCommand(new CommandAddQuest());
 
             event.getServer().getEntityWorld().getGameRules().setOrCreateGameRule("keepInventory", "true");
             event.getServer().getEntityWorld().getGameRules().setOrCreateGameRule("showDeathMessages", "false");

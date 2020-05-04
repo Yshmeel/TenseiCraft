@@ -39,6 +39,7 @@ common.ninja_card.card_btn=Info
 common.ninja_card.learn_jutsu_btn=Releases
 common.ninja_card.backpack_btn=Jutsu
 common.ninja_card.learns_not_found=You don't have any releases!%nUp to 4 level for unlock releases.
+common.ninja_card.nothing_here_slot=There is nothing in%nthis slot.
 
 # Stats
 common.jutsu_points=JP (Jutsu Points)

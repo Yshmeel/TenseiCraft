@@ -1,10 +1,10 @@
-package com.yshmeel.tenseicraft.client.cutscenes;
+package com.yshmeel.tenseicraft.client.dialogs;
 
 import com.yshmeel.tenseicraft.Tensei;
 import com.yshmeel.tenseicraft.client.Sounds;
 import com.yshmeel.tenseicraft.client.gui.RegisterScreen;
 import com.yshmeel.tenseicraft.client.gui.fonts.DrawFonts;
-import com.yshmeel.tenseicraft.client.utils.CutSceneUtils;
+import com.yshmeel.tenseicraft.client.utils.DialogUtils;
 import com.yshmeel.tenseicraft.client.utils.GuiUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -16,21 +16,19 @@ import net.minecraft.util.SoundEvent;
 import org.lwjgl.opengl.GL11;
 
 import java.io.IOException;
-import java.util.Random;
-import java.util.concurrent.Callable;
 
-public class TutorialCutScene extends GuiScreen {
+public class TutorialDialog extends GuiScreen {
     public String[] firstDialogues = {
-        I18n.format("cutscenes.tutorial.step_first.dialog_1"),
-        I18n.format("cutscenes.tutorial.step_first.dialog_2"),
-        I18n.format("cutscenes.tutorial.step_first.dialog_3"),
-        I18n.format("cutscenes.tutorial.step_first.dialog_4"),
-        I18n.format("cutscenes.tutorial.step_first.dialog_5"),
-        I18n.format("cutscenes.tutorial.step_first.dialog_6"),
-        I18n.format("cutscenes.tutorial.step_second.dialog_7"),
-        I18n.format("cutscenes.tutorial.step_second.dialog_8"),
-        I18n.format("cutscenes.tutorial.step_second.dialog_9"),
-        I18n.format("cutscenes.tutorial.step_second.dialog_10")
+        I18n.format("dialogs.tutorial.step_first.dialog_1"),
+        I18n.format("dialogs.tutorial.step_first.dialog_2"),
+        I18n.format("dialogs.tutorial.step_first.dialog_3"),
+        I18n.format("dialogs.tutorial.step_first.dialog_4"),
+        I18n.format("dialogs.tutorial.step_first.dialog_5"),
+        I18n.format("dialogs.tutorial.step_first.dialog_6"),
+        I18n.format("dialogs.tutorial.step_second.dialog_7"),
+        I18n.format("dialogs.tutorial.step_second.dialog_8"),
+        I18n.format("dialogs.tutorial.step_second.dialog_9"),
+        I18n.format("dialogs.tutorial.step_second.dialog_10")
     };
 
     public boolean isClicked = false;
@@ -38,13 +36,13 @@ public class TutorialCutScene extends GuiScreen {
     public int currentDialog = 0;
     public String currentMode = "dialog";
     public ResourceLocation DIALOG_HEAD = new ResourceLocation(Tensei.MODID, "textures/cutscene/six_path.png");
-    public String DIALOG_TITLE = I18n.format("cutscenes.tutorial.title");
+    public String DIALOG_TITLE = I18n.format("dialogs.tutorial.title");
 
-    public TutorialCutScene() {
+    public TutorialDialog() {
 
     }
 
-    public TutorialCutScene(int currentDialog, String currentMode) {
+    public TutorialDialog(int currentDialog, String currentMode) {
         this.currentDialog = currentDialog;
         this.currentMode = currentMode;
     }
@@ -52,7 +50,7 @@ public class TutorialCutScene extends GuiScreen {
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         if(currentMode.equals("dialog")) {
             this.drawDefaultBackground();
-            CutSceneUtils.renderDialog(DIALOG_HEAD, DIALOG_TITLE, firstDialogues[currentDialog], () -> {
+            DialogUtils.renderDialog(DIALOG_HEAD, DIALOG_TITLE, firstDialogues[currentDialog], () -> {
                 if(currentDialog == 5) {
                     currentMode = "showcase";
                     currentDialog = 0;
@@ -61,14 +59,14 @@ public class TutorialCutScene extends GuiScreen {
                     Minecraft.getMinecraft().displayGuiScreen(new RegisterScreen());
                     currentDialog ++;
                 } else if(currentDialog == 9) {
-                    CutSceneUtils.closeCutScene();
+                    DialogUtils.closeDialog();
                 } else {
                     Minecraft.getMinecraft().player.playSound(new SoundEvent(Sounds.HMM_CUTSCENE), 5.0f, 0.9F);
                     currentDialog ++;
                 }
             }, mouseX, mouseY, this.isClicked, currentDialog, currentMode);
         } else if(currentMode.equals("showcase")) {
-            CutSceneUtils.activeCutSceneMode = "showcase";
+            DialogUtils.activeDialogMode = "showcase";
             switch(currentDialog) {
                 case 0:
                     int hpBarX = 165;

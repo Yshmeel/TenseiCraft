@@ -4,6 +4,7 @@ import com.yshmeel.tenseicraft.common.entities.GeninMob;
 import com.yshmeel.tenseicraft.common.fighting.jutsu.Jutsu;
 import com.yshmeel.tenseicraft.common.fighting.jutsu.entities.clones.EntityClone;
 import com.yshmeel.tenseicraft.data.ModInfo;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -16,6 +17,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
+import org.lwjgl.opengl.GL11;
 
 public class EarthCloneJutsu extends Jutsu {
     @Override

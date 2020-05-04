@@ -62,6 +62,8 @@ public class Player implements IPlayer {
     @Override
     public void consumeChakra(double chakraAmount) {
         this.chakraAmount -= chakraAmount;
+
+        this.syncServerToClient();
     }
 
     @Override
@@ -287,7 +289,7 @@ public class Player implements IPlayer {
     public void onUpdate() {
         if(this.chakraFillTimer >= 30) {
             if(!this.isChakraFillModeEnabled()) {
-                this.addChakra(0.3D);
+                this.addChakra(0.3D * this.getNinjutsu()/1.3);
                 this.chakraFillTimer = 0;
             }
         } else {
@@ -301,7 +303,13 @@ public class Player implements IPlayer {
                         new TextComponentTranslation("common.tenseicraft.chakra_fill.disabled_force")
                 );
             } else {
-                this.addChakra(0.4D);
+                if(this.chakraFillTimer >= 10) {
+                    this.addChakra((0.345D * this.getNinjutsu()/1.3));
+                    this.chakraFillTimer = 0;
+                } else {
+                    this.chakraFillTimer++;
+                }
+
             }
         }
 
@@ -519,11 +527,13 @@ public class Player implements IPlayer {
     @Override
     public void setSkillPoints(int value) {
         this.skillPoints = value;
+        this.syncServerToClient();
     }
 
     @Override
     public void addSkillPoints(int value) {
         this.skillPoints += value;
+        this.syncServerToClient();
     }
 
     @Override

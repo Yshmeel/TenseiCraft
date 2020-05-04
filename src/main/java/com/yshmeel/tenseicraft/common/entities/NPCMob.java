@@ -1,23 +1,14 @@
 package com.yshmeel.tenseicraft.common.entities;
 
 import com.yshmeel.tenseicraft.Tensei;
-import com.yshmeel.tenseicraft.client.utils.CutSceneUtils;
-import com.yshmeel.tenseicraft.common.packets.PacketDispatcher;
-import com.yshmeel.tenseicraft.common.packets.PacketShowCutSceneMessage;
+import com.yshmeel.tenseicraft.client.utils.DialogUtils;
 import net.minecraft.entity.EntityCreature;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.*;
-import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.monster.EntitySpider;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-
-import javax.annotation.Nullable;
 
 
 public class NPCMob extends EntityCreature {
@@ -56,7 +47,7 @@ public class NPCMob extends EntityCreature {
     public boolean processInteract(EntityPlayer player, EnumHand hand)
     {
         if (this.world.isRemote) {
-            CutSceneUtils.showCutScene("iruka_tutorial", () -> {
+            DialogUtils.showDialog("iruka_tutorial", () -> {
                 Tensei.logger.info("on end");
                 return true;
             });

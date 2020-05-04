@@ -14,5 +14,9 @@
   "hmm_cutscene": {
     "category": "master",
     "sounds": [ "tenseicraft:hmm" ]
+  },
+  "teleport_sound": {
+    "category": "master",
+    "sounds": [ "tenseicraft:teleport_sound" ]
   }
 }

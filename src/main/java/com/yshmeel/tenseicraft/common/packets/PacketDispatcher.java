@@ -22,6 +22,8 @@ public class PacketDispatcher {
         INSTANCE.registerMessage(PacketActivateJutsuMessage.class, PacketActivateJutsuMessage.class, id++, Side.SERVER);
         INSTANCE.registerMessage(PacketLearnJutsuTypeMessage.class, PacketLearnJutsuTypeMessage.class, id++, Side.SERVER);
         INSTANCE.registerMessage(PacketRegisterPlayer.class, PacketRegisterPlayer.class, id++, Side.SERVER);
+        INSTANCE.registerMessage(PacketReplaceTechniqueMessage.class, PacketReplaceTechniqueMessage.class, id++, Side.CLIENT);
+        INSTANCE.registerMessage(PacketReplaceTechniqueMessage.class, PacketReplaceTechniqueMessage.class, id++, Side.SERVER);
         INSTANCE.registerMessage(PacketUpdateStatsMessage.class, PacketUpdateStatsMessage.class, id++, Side.CLIENT);
         INSTANCE.registerMessage(PacketSetJutsuSlotsMessage.class, PacketSetJutsuSlotsMessage.class, id++, Side.CLIENT);
         INSTANCE.registerMessage(PacketActivateJutsuMessage.class, PacketActivateJutsuMessage.class, id++, Side.CLIENT);
@@ -29,6 +31,8 @@ public class PacketDispatcher {
         INSTANCE.registerMessage(PacketRegisterPlayer.class, PacketRegisterPlayer.class, id++, Side.CLIENT);
         INSTANCE.registerMessage(PacketShowCutSceneMessage.class, PacketShowCutSceneMessage.class, id++, Side.SERVER);
         INSTANCE.registerMessage(PacketShowCutSceneMessage.class, PacketShowCutSceneMessage.class, id++, Side.CLIENT);
+        INSTANCE.registerMessage(PacketSpawnParticleMessage.class, PacketSpawnParticleMessage.class, id++, Side.CLIENT);
+        INSTANCE.registerMessage(PacketPlaySoundMessage.class, PacketPlaySoundMessage.class, id++, Side.CLIENT);
     }
 
     public static void sendToAll(IMessage message)
@@ -58,5 +62,9 @@ public class PacketDispatcher {
         } else {
             sendToServer(message);
         }
+    }
+
+    public static void sendToAllAround(IMessage message, NetworkRegistry.TargetPoint targetPoint) {
+        INSTANCE.sendToAllAround(message, targetPoint);
     }
 }

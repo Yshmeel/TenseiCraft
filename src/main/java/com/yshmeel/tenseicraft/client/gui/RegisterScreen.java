@@ -2,7 +2,7 @@ package com.yshmeel.tenseicraft.client.gui;
 
 import com.yshmeel.tenseicraft.Tensei;
 import com.yshmeel.tenseicraft.client.gui.fonts.DrawFonts;
-import com.yshmeel.tenseicraft.client.utils.CutSceneUtils;
+import com.yshmeel.tenseicraft.client.utils.DialogUtils;
 import com.yshmeel.tenseicraft.common.packets.PacketDispatcher;
 import com.yshmeel.tenseicraft.common.packets.PacketRegisterPlayer;
 import net.minecraft.client.Minecraft;
@@ -90,16 +90,16 @@ public class RegisterScreen extends GuiScreen {
             familyIter ++;
         }
 
-        new Button((CONTAINER_SECTION_POS[0] + families.length*3) + 4, familiesY + 10, I18n.format("cutscenes.common.create"), () -> {
+        new Button((CONTAINER_SECTION_POS[0] + families.length*3) + 4, familiesY + 10, I18n.format("dialogs.common.create"), () -> {
             if(this.lastName.getText().length() > 2) {
                 PacketDispatcher.sendToServer(
                     new PacketRegisterPlayer(Minecraft.getMinecraft().player, this.lastName.getText())
                 );
 
-                CutSceneUtils.closeCutScene();
-                CutSceneUtils.activeCutSceneMode = "dialog";
-                CutSceneUtils.activeCutSceneDialogId = 9;
-                CutSceneUtils.showCutScene("tutorial");
+                DialogUtils.closeDialog();
+                DialogUtils.activeDialogMode = "dialog";
+                DialogUtils.activeDialogId = 9;
+                DialogUtils.showDialog("tutorial");
             }
         }, false, mouseX, mouseY, isClicked, 35).render();
 

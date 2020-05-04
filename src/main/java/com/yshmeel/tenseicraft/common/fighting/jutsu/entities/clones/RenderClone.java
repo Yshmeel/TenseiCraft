@@ -4,13 +4,19 @@ import com.yshmeel.tenseicraft.Tensei;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.client.renderer.vertex.VertexBuffer;
 import net.minecraft.client.resources.SkinManager;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 import javax.annotation.Nullable;
 
@@ -26,8 +32,8 @@ public class RenderClone extends RenderLiving
     @Override
     protected void preRenderCallback(EntityLivingBase entity, float f)
     {
-    }
 
+    }
     /**
      * Returns the location of an entity's texture. Doesn't seem to be called
      * unless you call Render.bindEntityTexture.
@@ -43,7 +49,6 @@ public class RenderClone extends RenderLiving
                 texture = AbstractClientPlayer.getLocationSkin(entityMob.getCustomNameTag());
                 AbstractClientPlayer.getDownloadImageSkin(texture, entityMob.getCustomNameTag());
             }
-
             Minecraft.getMinecraft().renderEngine.bindTexture(texture);
             return texture;
         }

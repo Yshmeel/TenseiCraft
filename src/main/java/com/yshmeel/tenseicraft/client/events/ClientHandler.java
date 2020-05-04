@@ -5,16 +5,19 @@ import com.yshmeel.tenseicraft.client.Sounds;
 import com.yshmeel.tenseicraft.client.gui.InGameInterface;
 import com.yshmeel.tenseicraft.client.gui.NinjaCard;
 import com.yshmeel.tenseicraft.client.render.EyesLayer;
-import com.yshmeel.tenseicraft.client.utils.CutSceneUtils;
+import com.yshmeel.tenseicraft.client.utils.DialogUtils;
 import com.yshmeel.tenseicraft.client.utils.JutsuUtils;
 import com.yshmeel.tenseicraft.client.utils.KeyboardUtils;
+import com.yshmeel.tenseicraft.common.fighting.jutsu.earth.EarthCloneJutsu;
+import com.yshmeel.tenseicraft.common.fighting.jutsu.entities.clones.EntityClone;
 import com.yshmeel.tenseicraft.common.packets.PacketActivateJutsuMessage;
 import com.yshmeel.tenseicraft.common.packets.PacketDispatcher;
+import com.yshmeel.tenseicraft.common.packets.PacketReplaceTechniqueMessage;
 import com.yshmeel.tenseicraft.data.player.IPlayer;
 import com.yshmeel.tenseicraft.data.player.Player;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.SoundEvent;
@@ -26,7 +29,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
 
@@ -58,14 +61,14 @@ public class ClientHandler {
 
             if (player.isDataFilled()) {
                 if(!player.isRegistered()) {
-                    if(!CutSceneUtils.activeCutSceneMode.equals("showcase")) {
-                        if(CutSceneUtils.activeCutSceneDialogId != 8) {
-                            CutSceneUtils.showCutScene("tutorial");
+                    if(!DialogUtils.activeDialogMode.equals("showcase")) {
+                        if(DialogUtils.activeDialogId != 8) {
+                            DialogUtils.showDialog("tutorial");
                         }
                     } else {
-                        CutSceneUtils.activeCutSceneMode = "showcase";
-                        CutSceneUtils.activeCutSceneDialogId = 0;
-                        CutSceneUtils.showCutScene("tutorial");
+                        DialogUtils.activeDialogMode = "showcase";
+                        DialogUtils.activeDialogId = 0;
+                        DialogUtils.showDialog("tutorial");
                     }
 
                 }
@@ -79,11 +82,11 @@ public class ClientHandler {
         if(player != null) {
             if(Keyboard.isKeyDown(Keyboard.KEY_RETURN)) {
                 if(!player.isRegistered()) {
-                    if(CutSceneUtils.activeCutSceneMode.equals("showcase")) {
-                        CutSceneUtils.closeCutScene();
-                        CutSceneUtils.activeCutSceneMode = "dialog";
-                        CutSceneUtils.activeCutSceneDialogId = 6;
-                        CutSceneUtils.showCutScene("tutorial");
+                    if(DialogUtils.activeDialogMode.equals("showcase")) {
+                        DialogUtils.closeDialog();
+                        DialogUtils.activeDialogMode = "dialog";
+                        DialogUtils.activeDialogId = 6;
+                        DialogUtils.showDialog("tutorial");
                     }
                 }
             }
@@ -103,14 +106,24 @@ public class ClientHandler {
             );
         }
 
-        if(Keys.CHAKRA_FILL_BUTTON.isPressed()) {
-            player.setChakraFillModeEnabled(!player.isChakraFillModeEnabled());
-            Minecraft.getMinecraft().player.sendMessage(
-                    new TextComponentTranslation("common.tenseicraft.chakra_fill." +
-                            (player.isChakraFillModeEnabled() ? "enabled" : "disabled"))
-            );
+        if(player.getChakra() != player.getMaxChakra()) {
+            if(Keys.CHAKRA_FILL_BUTTON.isKeyDown() && !player.isChakraFillModeEnabled()) {
+                player.setChakraFillModeEnabled(true);
+                Minecraft.getMinecraft().player.sendMessage(
+                        new TextComponentTranslation("common.tenseicraft.chakra_fill.enabled")
+                );
 
-            // @todo сделать анимацию медитации.
+                // @todo сделать анимацию медитации.
+            } else if(!Keys.CHAKRA_FILL_BUTTON.isKeyDown() && player.isChakraFillModeEnabled()) {
+                player.setChakraFillModeEnabled(false);
+                Minecraft.getMinecraft().player.sendMessage(
+                        new TextComponentTranslation("common.tenseicraft.chakra_fill.disabled")
+                );
+            }
+        }
+
+        if(Keys.REPLACE_TECHNIQUE.isPressed()) {
+            PacketDispatcher.sendToServer(new PacketReplaceTechniqueMessage());
         }
 
         if(Keys.NINJA_CARD_GUI_OPEN.isPressed()) {
@@ -168,4 +181,5 @@ public class ClientHandler {
             event.getRenderer().addLayer(new EyesLayer((RenderPlayer) event.getRenderer()));
         }
     }
+
 }

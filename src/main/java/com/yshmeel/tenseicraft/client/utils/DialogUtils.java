@@ -2,9 +2,9 @@ package com.yshmeel.tenseicraft.client.utils;
 
 import com.yshmeel.tenseicraft.Tensei;
 import com.yshmeel.tenseicraft.client.Keys;
-import com.yshmeel.tenseicraft.client.cutscenes.FirstReleaseCutScene;
-import com.yshmeel.tenseicraft.client.cutscenes.IrukaTutorialCutScene;
-import com.yshmeel.tenseicraft.client.cutscenes.TutorialCutScene;
+import com.yshmeel.tenseicraft.client.dialogs.FirstReleaseDialog;
+import com.yshmeel.tenseicraft.client.dialogs.IrukaTutorialDialog;
+import com.yshmeel.tenseicraft.client.dialogs.TutorialDialog;
 import com.yshmeel.tenseicraft.client.gui.fonts.DrawFonts;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -16,10 +16,10 @@ import org.lwjgl.opengl.GL11;
 
 import java.util.concurrent.Callable;
 
-public class CutSceneUtils {
-    public static boolean hasActiveCutscene = false;
-    public static int activeCutSceneDialogId = -1;
-    public static String activeCutSceneMode = "";
+public class DialogUtils {
+    public static boolean hasActiveDialog = false;
+    public static int activeDialogId = -1;
+    public static String activeDialogMode = "";
 
     public static boolean renderDialog(ResourceLocation dialogHead, String name, String text, Runnable onNext, int mouseX, int mouseY, boolean isClicked, int dialogId, String mode) {
         ScaledResolution resolution = new ScaledResolution(Minecraft.getMinecraft());
@@ -43,17 +43,17 @@ public class CutSceneUtils {
                 && mouseY > cutScenePosY + 60 && mouseY < cutScenePosY + 80);
 
         if(hoverBtn) {
-            DrawFonts.Draw.drawString(cutScenePosX + 10, cutScenePosY + 70, I18n.format("cutscenes.common.next"),
+            DrawFonts.Draw.drawString(cutScenePosX + 10, cutScenePosY + 70, I18n.format("dialogs.common.next"),
                     14, 0xFF968300, Tensei.fonts.getFont("ptsans"), false,
                     true);
         } else {
-            DrawFonts.Draw.drawString(cutScenePosX + 10, cutScenePosY + 70, I18n.format("cutscenes.common.next"),
+            DrawFonts.Draw.drawString(cutScenePosX + 10, cutScenePosY + 70, I18n.format("dialogs.common.next"),
                     14, 0xFFFFFFFF, Tensei.fonts.getFont("ptsans"), false,
                     true);
         }
 
-        activeCutSceneDialogId = dialogId;
-        activeCutSceneMode = mode;
+        activeDialogId = dialogId;
+        activeDialogMode = mode;
 
         if(isClicked && hoverBtn) {
             onNext.run();
@@ -67,51 +67,51 @@ public class CutSceneUtils {
                     .replace("{ninja_card_btn}", Keyboard.getKeyName(Keys.NINJA_CARD_GUI_OPEN.getKeyCode()));
     }
 
-    public static void showCutScene(String cutSceneId) {
-        showCutScene(cutSceneId, null);
+    public static void showDialog(String cutSceneId) {
+        showDialog(cutSceneId, null);
     }
 
-    public static void showCutScene(String cutSceneId, Callable onEnd) {
-        hasActiveCutscene = true;
+    public static void showDialog(String cutSceneId, Callable onEnd) {
+        hasActiveDialog = true;
         switch(cutSceneId) {
             case "tutorial":
-                if(!(Minecraft.getMinecraft().currentScreen instanceof TutorialCutScene)) {
-                    if(activeCutSceneDialogId != -1) {
-                        Minecraft.getMinecraft().displayGuiScreen(new TutorialCutScene(activeCutSceneDialogId, activeCutSceneMode));
+                if(!(Minecraft.getMinecraft().currentScreen instanceof TutorialDialog)) {
+                    if(activeDialogId != -1) {
+                        Minecraft.getMinecraft().displayGuiScreen(new TutorialDialog(activeDialogId, activeDialogMode));
                     } else {
-                        Minecraft.getMinecraft().displayGuiScreen(new TutorialCutScene());
+                        Minecraft.getMinecraft().displayGuiScreen(new TutorialDialog());
                     }
                 }
                 break;
             case "first_release":
-                if(!(Minecraft.getMinecraft().currentScreen instanceof FirstReleaseCutScene)) {
-                    if(activeCutSceneDialogId != -1) {
-                        Minecraft.getMinecraft().displayGuiScreen(new FirstReleaseCutScene(activeCutSceneDialogId));
+                if(!(Minecraft.getMinecraft().currentScreen instanceof FirstReleaseDialog)) {
+                    if(activeDialogId != -1) {
+                        Minecraft.getMinecraft().displayGuiScreen(new FirstReleaseDialog(activeDialogId));
                     } else {
-                        Minecraft.getMinecraft().displayGuiScreen(new FirstReleaseCutScene());
+                        Minecraft.getMinecraft().displayGuiScreen(new FirstReleaseDialog());
                     }
                 }
                 break;
             case "iruka_tutorial":
-                if(!(Minecraft.getMinecraft().currentScreen instanceof IrukaTutorialCutScene)) {
-                    if(activeCutSceneDialogId != -1) {
-                        Minecraft.getMinecraft().displayGuiScreen(new IrukaTutorialCutScene(activeCutSceneDialogId));
+                if(!(Minecraft.getMinecraft().currentScreen instanceof IrukaTutorialDialog)) {
+                    if(activeDialogId != -1) {
+                        Minecraft.getMinecraft().displayGuiScreen(new IrukaTutorialDialog(activeDialogId));
                     } else {
-                        Minecraft.getMinecraft().displayGuiScreen(new IrukaTutorialCutScene(onEnd));
+                        Minecraft.getMinecraft().displayGuiScreen(new IrukaTutorialDialog(onEnd));
                     }
                 }
                 break;
             default:
-                hasActiveCutscene = false;
+                hasActiveDialog = false;
                 break;
         }
     }
 
-    public static void closeCutScene() {
-        if(hasActiveCutscene) {
+    public static void closeDialog() {
+        if(hasActiveDialog) {
             Minecraft.getMinecraft().displayGuiScreen(null);
-            activeCutSceneDialogId = -1;
-            activeCutSceneMode = "";
+            activeDialogId = -1;
+            activeDialogMode = "";
         }
     }
 }

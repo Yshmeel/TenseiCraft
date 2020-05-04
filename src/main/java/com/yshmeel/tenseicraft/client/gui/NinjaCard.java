@@ -101,12 +101,12 @@ public class NinjaCard extends GuiScreen {
                     this.currentTab = "info";
                 }, (this.currentTab.equals("info")), this.mouseX, this.mouseY, isClicked, 30).render();
 
-        new Button(this.BUTTON_SECTION_POS[0] + 80, this.BUTTON_SECTION_POS[1], I18n.format("common.ninja_card.learn_jutsu_btn"),
+        new Button(this.BUTTON_SECTION_POS[0] + 78, this.BUTTON_SECTION_POS[1], I18n.format("common.ninja_card.learn_jutsu_btn"),
                 () -> {
                     this.currentTab = "jutsu_learn";
                 }, (this.currentTab.equals("jutsu_learn")), this.mouseX, this.mouseY, isClicked, 0).render();
 
-        new Button(this.BUTTON_SECTION_POS[0] + 160, this.BUTTON_SECTION_POS[1], I18n.format("common.ninja_card.backpack_btn"),
+        new Button(this.BUTTON_SECTION_POS[0] + 155, this.BUTTON_SECTION_POS[1], I18n.format("common.ninja_card.backpack_btn"),
                 () -> {
                     this.currentTab = "jutsu_backpack";
                 }, (this.currentTab.equals("jutsu_backpack")), this.mouseX, this.mouseY, isClicked, 35).render();
@@ -263,10 +263,18 @@ public class NinjaCard extends GuiScreen {
             GL11.glPopMatrix();
 
             GL11.glColor4f(-1, -1, -1, 0.4f);
-            this.renderTooltip(hotbarSlotX, hotbarSlotY, I18n.format("common.ninja_card.slot") + " " + i,
-                    String.format(I18n.format("common.ninja_card.slot_description",
-                            i, JutsuSlots.valueOf("SLOT" + i).getKeyboardKeys())), 30, 33);
-
+            String[] lines = {
+                I18n.format("common.ninja_card.slot") + " " + i,
+                String.format(I18n.format("common.ninja_card.slot_description",
+                        i, JutsuSlots.valueOf("SLOT" + i).getKeyboardKeys())),
+                "%n",
+                (jutsu == null ? I18n.format("common.ninja_card.nothing_here_slot") : ""),
+                (jutsu == null ? "" : I18n.format(jutsu.getName())),
+                (jutsu == null ? "" : "%n"),
+                (jutsu == null ? "" : I18n.format(jutsu.getDescription()))
+            };
+            this.renderTooltip(hotbarSlotX, hotbarSlotY, lines,
+                    30, (jutsu == null ? 92 : 110));
 
             additionalMargin += 60;
         }
@@ -518,11 +526,37 @@ public class NinjaCard extends GuiScreen {
         return 0;
     }
 
+    public void renderTooltip(int x, int y, String[] lines, int width, int height) {
+        if((this.mouseX > x && this.mouseX < x + width
+                && this.mouseY > y && this.mouseY < y + height) && !isTooltipEnabled) {
+            GL11.glPushMatrix();
+            Gui.drawRect(x, y + 35, x+ 90, y + height + 30, 1711276032);
+            int xString = x + 5;
+            int yString = y + 43;
+            for(String line: lines) {
+                if(line.equals("")) continue;
+                if(line.equals("%n")) {
+                    yString += 7;
+                    continue;
+                }
+                DrawFonts.Draw.drawString(
+                        xString, yString,
+                        String.format(line), 14,
+                        0x00000000, Tensei.fonts.getFont("ptsans"), false, true);
+                yString += line.length()/1.5;
+            }
+            GL11.glPopMatrix();
+            isTooltipEnabled = true;
+        } else {
+            isTooltipEnabled = false;
+        }
+    }
+
     public void renderTooltip(int x, int y, String title, String description, int width, int height) {
         if((this.mouseX > x && this.mouseX < x + width
                 && this.mouseY > y && this.mouseY < y + height) && !isTooltipEnabled) {
             GL11.glPushMatrix();
-            Gui.drawRect(x, y + 100, x+ 90, y + 37, 1711276032);
+            Gui.drawRect(x, y + 35, x+ 90, y + height + 30, 1711276032);
             DrawFonts.Draw.drawString(
                     x+5,y + 45,
                     title, 16,

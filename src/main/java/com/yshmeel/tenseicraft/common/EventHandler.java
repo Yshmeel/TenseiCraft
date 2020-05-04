@@ -103,6 +103,9 @@ public class EventHandler {
                 event.setCanceled(true);
             }
         }
+        if(event.getEntity() instanceof EntityClone) {
+            event.setCanceled(true);
+        }
     }
 
     @SubscribeEvent

@@ -40,15 +40,19 @@ public class PacketUpdateStatsMessage extends AbstractMessage<PacketUpdateStatsM
                 switch(this.stat) {
                     case "ninjutsu":
                         data.addNinjutsu(1);
+                        data.setSkillPoints(data.getSkillPoints() - 1);
                         break;
                     case "taijutsu":
                         data.addTaijutsu(1);
+                        data.setSkillPoints(data.getSkillPoints() - 1);
                         break;
                     case "speed":
                         data.addSpeed(1);
+                        data.setSkillPoints(data.getSkillPoints() - 1);
                         break;
                     case "genjutsu":
                         data.addGenjutsu(1);
+                        data.setSkillPoints(data.getSkillPoints() - 1);
                         break;
                     default:
                         player.sendMessage(new TextComponentTranslation("common.tenseicraft.unexpected_error"));

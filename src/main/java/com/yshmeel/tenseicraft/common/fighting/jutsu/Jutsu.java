@@ -2,6 +2,8 @@ package com.yshmeel.tenseicraft.common.fighting.jutsu;
 
 import com.yshmeel.tenseicraft.Tensei;
 import com.yshmeel.tenseicraft.client.Sounds;
+import com.yshmeel.tenseicraft.common.packets.PacketDispatcher;
+import com.yshmeel.tenseicraft.common.packets.PacketPlaySoundMessage;
 import com.yshmeel.tenseicraft.data.player.IPlayer;
 import com.yshmeel.tenseicraft.data.player.Player;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,6 +13,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 
 public class Jutsu implements IJutsu {
@@ -114,8 +117,10 @@ public class Jutsu implements IJutsu {
 
         data.consumeChakra(this.getChakraTake());
 
-        SoundEvent sound = new SoundEvent(Sounds.JUTSU_SOUND).setRegistryName("jutsu_sound");
+        NetworkRegistry.TargetPoint target = new NetworkRegistry.TargetPoint(world.provider.getDimension(),
+                position.getX(), position.getY(), position.getZ(), 5.d);
+        PacketDispatcher.sendToAllAround(new PacketPlaySoundMessage("jutsu_sound", position.getX(),
+                position.getY() + 1, position.getZ()), target);
 
-        world.playSound(null, position, sound, SoundCategory.MASTER, 1.0F, 1.0F);
     }
 }

@@ -265,6 +265,7 @@ public class NinjaCard extends GuiScreen {
             GL11.glColor4f(-1, -1, -1, 0.4f);
             String[] lines = {
                 I18n.format("common.ninja_card.slot") + " " + i,
+                "%n",
                 String.format(I18n.format("common.ninja_card.slot_description",
                         i, JutsuSlots.valueOf("SLOT" + i).getKeyboardKeys())),
                 "%n",
@@ -323,7 +324,6 @@ public class NinjaCard extends GuiScreen {
 
             if( this.updateCooldown == 0 && isClicked && (this.mouseX > buttonX && this.mouseX < buttonX + 30
                     && this.mouseY > buttonY && this.mouseY < buttonY + 33)) {
-                // @todo доделать!
                 this.selectSlot = true;
                 this.jutsuSelected = jutsu;
                 this.updateCooldown = 100;

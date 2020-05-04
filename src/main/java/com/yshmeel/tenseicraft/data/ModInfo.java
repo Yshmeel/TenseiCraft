@@ -7,6 +7,7 @@ import com.yshmeel.tenseicraft.common.fighting.genkai.IGenkai;
 import com.yshmeel.tenseicraft.common.fighting.genkai.SharinganGenkai;
 import com.yshmeel.tenseicraft.common.fighting.jutsu.IJutsu;
 import com.yshmeel.tenseicraft.common.fighting.jutsu.Jutsu;
+import com.yshmeel.tenseicraft.common.fighting.jutsu.entities.EntityWall;
 import com.yshmeel.tenseicraft.common.fighting.jutsutype.EarthJutsuType;
 import com.yshmeel.tenseicraft.common.fighting.jutsutype.IJutsuType;
 import com.yshmeel.tenseicraft.common.fighting.jutsutype.WaterJutsuType;
@@ -151,6 +152,15 @@ public class ModInfo {
                         .id(new ResourceLocation("tenseicraft:null2"), entityIds++)
                         .name("NPCMob")
                         .tracker(64, 3, true)
+                        .build()
+        );
+
+        event.getRegistry().register(
+                EntityEntryBuilder.<Entity>create()
+                        .entity(EntityWall.class)
+                        .id(new ResourceLocation("tenseicraft:entity_wall"), entityIds++)
+                        .name("EntityWall")
+                        .tracker(100, 1, true)
                         .build()
         );
 

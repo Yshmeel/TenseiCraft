@@ -1,8 +1,11 @@
 package com.yshmeel.tenseicraft.client.gui;
 
 import com.yshmeel.tenseicraft.Tensei;
+import com.yshmeel.tenseicraft.client.Keys;
 import com.yshmeel.tenseicraft.client.events.ClientHandler;
 import com.yshmeel.tenseicraft.client.gui.fonts.DrawFonts;
+import com.yshmeel.tenseicraft.client.utils.GuiUtils;
+import com.yshmeel.tenseicraft.data.Constants;
 import com.yshmeel.tenseicraft.data.player.IPlayer;
 import com.yshmeel.tenseicraft.data.player.Player;
 import net.minecraft.block.material.Material;
@@ -26,9 +29,12 @@ import net.minecraft.util.FoodStats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 import java.util.Random;
+
+import static org.lwjgl.opengl.GL11.*;
 
 public class InGameInterface extends Gui {
     public static int[] NICKNAME_POS = {5, 25};
@@ -47,8 +53,12 @@ public class InGameInterface extends Gui {
         this.itemRenderer = this.mc.getRenderItem();
     }
 
+
+    // @todo Изменять обучение интерфейсу в зависимости от элементов на экране
     public void render(RenderGameOverlayEvent event) {
         ScaledResolution resolution = new ScaledResolution(Minecraft.getMinecraft());
+        NICKNAME_POS[0] = 5;
+        NICKNAME_POS[1] = 25;
         int[] EXPBAR_POS = {resolution.getScaledWidth(), resolution.getScaledHeight()};
 //        DrawFonts.Draw.drawString(250, 250, Minecraft.getMinecraft().player.getName(), 16, 0x00000000,
 //                Tensei.fonts.getFont("ptsans"));
@@ -75,12 +85,48 @@ public class InGameInterface extends Gui {
             chakra = 150;
         }
 
-        /* Draw hp bar */
-        Gui.drawRect(NICKNAME_POS[0], NICKNAME_POS[1]+15, NICKNAME_POS[0]+150, NICKNAME_POS[1]+27, 0xFFFFFFFF);
-        Gui.drawRect(NICKNAME_POS[0], NICKNAME_POS[1]+15, NICKNAME_POS[0]+(int) playerHealth, NICKNAME_POS[1]+27, 0xFFAA0000);
+        // @todo сделать проверку на то что имеет ли пользователь технику перемещения
+        int xGrid = NICKNAME_POS[0]+5;
+        int yGrid = NICKNAME_POS[1]+20;
+        int sides = 4;
+        for(int i = 0; i < 4; i++) {
+            if (player.getMoveSpells() >= i + 1) {
+                GL11.glColor4f(((float) 101)/255, ((float) 67)/255, ((float) 33)/255, 1.0F);
+            } else {
+                GL11.glColor4f(((float) 33)/255, ((float) 67)/255, ((float) 33)/255, 0.3F);
+                if ((player.getMoveSpells() - i) == 0) {
+                    int light = Constants.REPLACE_TECHNIQUE_FILL_COOLDOWN;
+                    int lightMedium = (Constants.REPLACE_TECHNIQUE_FILL_COOLDOWN / 2) + 85;
+                    int almostEnd = (Constants.REPLACE_TECHNIQUE_FILL_COOLDOWN / 5);
+                    if (player.getMoveCooldown() <= light && player.getMoveCooldown() >= lightMedium) {
+                        GL11.glColor4f(((float) 33)/255, ((float) 67)/255, ((float) 33)/255, 0.1F);
+                    } else if (player.getMoveCooldown() <= lightMedium && player.getMoveCooldown() >= almostEnd) {
+                        GL11.glColor4f(((float) 55)/255, ((float) 67)/255, ((float) 33)/255, 0.3F);
+                    }
+                    if (player.getMoveCooldown() <= almostEnd) {
+                        GL11.glColor4f(((float) 101)/255, ((float) 67)/255, ((float) 33)/255, 0.5F);
+                    }
+                }
+            }
+            GuiUtils.drawRegularPolygon(xGrid, yGrid, 4, sides);
+            xGrid += 16;
+        }
+        DrawFonts.Draw.drawString(xGrid - 3, yGrid - 6,
+                Keyboard.getKeyName(Keys.REPLACE_TECHNIQUE.getKeyCode()), 20, 0xFFFFFFFF,
+                Tensei.fonts.getFont("ptsans"), true, true);
 
-        Gui.drawRect(NICKNAME_POS[0], NICKNAME_POS[1]+35, NICKNAME_POS[0]+150, NICKNAME_POS[1]+47, 0xFFFFFFFF);
-        Gui.drawRect(NICKNAME_POS[0], NICKNAME_POS[1]+35, NICKNAME_POS[0]+(int) chakra, NICKNAME_POS[1]+47, 0xFF0000CC);
+        if(player.getMoveCooldown() > 0) {
+            DrawFonts.Draw.drawString(xGrid + 16, yGrid - 6,
+                    String.valueOf(player.getMoveCooldown()/20), 20, 0xFFFFFFFF,
+                    Tensei.fonts.getFont("ptsans"), true, true);
+        }
+
+        /* Draw hp bar */
+        Gui.drawRect(NICKNAME_POS[0], (NICKNAME_POS[1]-10)+45, NICKNAME_POS[0]+150, (NICKNAME_POS[1]-10)+60, 0xFFFFFFFF);
+        Gui.drawRect(NICKNAME_POS[0], (NICKNAME_POS[1]-10)+45, NICKNAME_POS[0]+(int) playerHealth, (NICKNAME_POS[1]-10)+60, 0xFFAA0000);
+
+        Gui.drawRect(NICKNAME_POS[0],(NICKNAME_POS[1]-10)+65, NICKNAME_POS[0]+150, (NICKNAME_POS[1]-10)+80, 0xFFFFFFFF);
+        Gui.drawRect(NICKNAME_POS[0], (NICKNAME_POS[1]-10)+65, NICKNAME_POS[0]+(int) chakra, (NICKNAME_POS[1]-10)+80, 0xFF0000CC);
         /* HP Bar render ends */
 
         GL11.glPopMatrix();
@@ -92,7 +138,7 @@ public class InGameInterface extends Gui {
         int iconPosX = NICKNAME_POS[0];
         int iconPosY = NICKNAME_POS[1]+55;
 
-        GL11.glEnable(GL11.GL_BLEND);
+        glEnable(GL11.GL_BLEND);
         GL11.glColor3f(255, 255, 255);
 
         if(player.isChakraFillModeEnabled()) {
@@ -129,8 +175,8 @@ public class InGameInterface extends Gui {
             xpRightPos = 5;
         }
 
-        Gui.drawRect(5, EXPBAR_POS[1]-14, EXPBAR_POS[0]-5, EXPBAR_POS[1]-7, 0x99000000);
-        Gui.drawRect(5, EXPBAR_POS[1]-14, xpRightPos, EXPBAR_POS[1]-7, 0xFFFFA500);
+        Gui.drawRect(4, EXPBAR_POS[1]-13, EXPBAR_POS[0]-5, EXPBAR_POS[1]-6, 0x99000000);
+        Gui.drawRect(5, EXPBAR_POS[1]-13, xpRightPos, EXPBAR_POS[1]-6, 0xFFFFA500);
 
         /* EXP Bar render ends */
 

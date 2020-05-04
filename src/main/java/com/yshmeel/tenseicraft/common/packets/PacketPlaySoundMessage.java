@@ -5,6 +5,7 @@ import com.yshmeel.tenseicraft.common.fighting.jutsu.IJutsu;
 import com.yshmeel.tenseicraft.data.ModInfo;
 import com.yshmeel.tenseicraft.data.player.IPlayer;
 import com.yshmeel.tenseicraft.data.player.Player;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.Sound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.PacketBuffer;
@@ -12,6 +13,7 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 
 import java.io.IOException;
@@ -51,7 +53,9 @@ public class PacketPlaySoundMessage extends AbstractMessage<PacketPlaySoundMessa
     @Override
     public void process(EntityPlayer player, Side side) {
         if(side.isClient()) {
-            player.getEntityWorld().playSound(player, x, y, z, Sounds.valueOf(soundName), SoundCategory.MASTER, 1.0F, 1.0F);
+            Minecraft.getMinecraft().addScheduledTask(() -> {
+                player.getEntityWorld().playSound(player, x, y, z, Sounds.valueOf(soundName), SoundCategory.MASTER, 1.0F, 1.0F);
+            });
         }
     }
 }

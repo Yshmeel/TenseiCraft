@@ -99,10 +99,11 @@ public class CustomFont {
 
     public void draw(int size, String str, int x, int y, int maxwidth, boolean shadow, int color) {
         initfonts();
+        GL11.glPushMatrix();
         if (shadow) {
+            GL11.glColor3f(0, 0, 0);
             Gui.drawRect(x - 5, y - 1, maxwidth != -1 ? maxwidth + 5 : x + getWidth(size, str) + 7, y + getHeight(size, str, maxwidth) + 5, 0xFF000000);
         }
-        GL11.glPushMatrix();
         GL11.glEnable(3042);
         GL11.glDisable(3553);
         GL11.glBlendFunc(770, 771);

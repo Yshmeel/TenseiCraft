@@ -8,6 +8,7 @@ import com.yshmeel.tenseicraft.common.packets.PacketLevelUpMessage;
 import com.yshmeel.tenseicraft.common.packets.PacketShowCutSceneMessage;
 import com.yshmeel.tenseicraft.common.packets.PacketSyncPlayerDataMessage;
 import com.yshmeel.tenseicraft.common.quests.base.IQuest;
+import com.yshmeel.tenseicraft.data.Constants;
 import com.yshmeel.tenseicraft.data.GensEnum;
 import com.yshmeel.tenseicraft.data.ModInfo;
 import net.minecraft.client.resources.I18n;
@@ -55,9 +56,12 @@ public class Player implements IPlayer {
     private int skillPoints = 0;
     private NBTTagCompound quest = new NBTTagCompound();
     private String questId = "";
+    private int moveSpells = 0;
+    private int moveSpellsCooldown = 0;
 
     /* Timers */
-    private int chakraFillTimer = 0; // fills to 30, then reset
+    public int chakraFillTimer = 0; // fills to 30, then reset
+    public int moveFillTimer = 0;
 
     @Override
     public void consumeChakra(double chakraAmount) {
@@ -291,9 +295,25 @@ public class Player implements IPlayer {
             if(!this.isChakraFillModeEnabled()) {
                 this.addChakra(0.3D * this.getNinjutsu()/1.3);
                 this.chakraFillTimer = 0;
+                this.syncServerToClient();
             }
         } else {
             this.chakraFillTimer ++;
+        }
+
+        if(this.getMoveSpells() < 4) {
+            /* @fixme Вот здесь баг вроде, надо пофиксить */
+            if(this.moveFillTimer >= Constants.REPLACE_TECHNIQUE_FILL_COOLDOWN) {
+                this.addMoveSpell(1);
+                this.moveFillTimer = 0;
+                this.syncServerToClient();
+            } else {
+                this.moveFillTimer ++;
+            }
+        }
+
+        if(this.getMoveCooldown() > 0) {
+            this.setMoveCooldown(this.getMoveCooldown()-1);
         }
 
         if(this.isChakraFillModeEnabled()) {
@@ -508,6 +528,36 @@ public class Player implements IPlayer {
     }
 
     @Override
+    public void addMoveSpell(int amount) {
+        this.moveSpells += amount;
+        if(this.moveSpells > 4) this.moveSpells = 4;
+        this.syncServerToClient();
+    }
+
+    @Override
+    public void setMoveSpell(int amount) {
+        this.moveSpells = amount;
+        if(this.moveSpells > 4) this.moveSpells = 4;
+        this.syncServerToClient();
+    }
+
+    @Override
+    public int getMoveSpells() {
+        return (this.moveSpells > 4 ? 4 : this.moveSpells);
+    }
+
+    @Override
+    public int getMoveCooldown() {
+        return this.moveSpellsCooldown;
+    }
+
+    @Override
+    public void setMoveCooldown(int cooldown) {
+        this.moveSpellsCooldown = cooldown;
+        this.syncServerToClient();
+    }
+
+    @Override
     public void setJutsuPoints(int jutsuPoints) {
         this.jutsuPoints = jutsuPoints;
         this.syncServerToClient();
@@ -601,6 +651,8 @@ public class Player implements IPlayer {
         this.registered = tag.getBoolean("registered");
         this.quest = tag.getCompoundTag("quest");
         this.questId = tag.getString("questId");
+        this.moveSpells = tag.getInteger("moveSpells");
+        this.moveSpellsCooldown = tag.getInteger("moveSpellsCooldown");
         this.dataFilled = true;
     }
 
@@ -629,6 +681,8 @@ public class Player implements IPlayer {
         compound.setBoolean("registered", this.registered);
         compound.setTag("quest", this.quest);
         compound.setString("questId", this.questId);
+        compound.setInteger("moveSpells", this.moveSpells);
+        compound.setInteger("moveSpellsCooldown", this.moveSpellsCooldown);
 
         return compound;
     }

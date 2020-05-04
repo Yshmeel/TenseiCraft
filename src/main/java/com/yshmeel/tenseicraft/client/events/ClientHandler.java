@@ -122,7 +122,7 @@ public class ClientHandler {
             }
         }
 
-        if(Keys.REPLACE_TECHNIQUE.isPressed()) {
+        if(Keys.REPLACE_TECHNIQUE.isPressed() && player.getMoveCooldown() == 0) {
             PacketDispatcher.sendToServer(new PacketReplaceTechniqueMessage());
         }
 

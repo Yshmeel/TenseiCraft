@@ -109,6 +109,12 @@ public interface IPlayer {
     public void appendJutsuToSlot(String jutsuId, int slotId);
     public boolean isJutsuInHotbar(String jutsuId);
 
+    public void addMoveSpell(int amount);
+    public void setMoveSpell(int amount);
+    public int getMoveSpells();
+    public int getMoveCooldown();
+    public void setMoveCooldown(int cooldown);
+
     /* Fighting system ends */
 
     /* Learning system */

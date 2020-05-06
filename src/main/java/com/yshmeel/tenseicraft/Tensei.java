@@ -7,6 +7,9 @@ import com.yshmeel.tenseicraft.common.fighting.jutsu.Jutsu;
 import com.yshmeel.tenseicraft.common.fighting.jutsutype.IJutsuType;
 import com.yshmeel.tenseicraft.data.ModInfo;
 import com.yshmeel.tenseicraft.proxy.CommonProxy;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.GameRules;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -31,7 +34,12 @@ public class Tensei
     public static final String NAME = "TenseiCraft";
     public static final String VERSION = "1.0";
 
-
+    public static final CreativeTabs WEAPON_TAB = new CreativeTabs("weapon") {
+        @Override
+        public ItemStack getTabIconItem() {
+            return new ItemStack(Items.DIAMOND_AXE);
+        }
+    };
     @SidedProxy(clientSide = "com.yshmeel.tenseicraft.proxy.ClientProxy", serverSide = "com.yshmeel.tenseicraft.proxy.CommonProxy")
     public static CommonProxy proxy;
     @SideOnly(Side.CLIENT)

@@ -1,14 +1,18 @@
 package com.yshmeel.tenseicraft.data;
 
 import com.yshmeel.tenseicraft.Tensei;
+import com.yshmeel.tenseicraft.client.dialogs.DialogList;
+import com.yshmeel.tenseicraft.common.entities.EntityWood;
 import com.yshmeel.tenseicraft.common.entities.GeninMob;
 import com.yshmeel.tenseicraft.common.entities.NPCMob;
 import com.yshmeel.tenseicraft.common.fighting.genkai.IGenkai;
 import com.yshmeel.tenseicraft.common.fighting.genkai.SharinganGenkai;
 import com.yshmeel.tenseicraft.common.fighting.jutsu.IJutsu;
 import com.yshmeel.tenseicraft.common.fighting.jutsu.Jutsu;
+import com.yshmeel.tenseicraft.common.fighting.jutsu.entities.EntityBall;
 import com.yshmeel.tenseicraft.common.fighting.jutsu.entities.EntityWall;
 import com.yshmeel.tenseicraft.common.fighting.jutsutype.EarthJutsuType;
+import com.yshmeel.tenseicraft.common.fighting.jutsutype.FireJutsuType;
 import com.yshmeel.tenseicraft.common.fighting.jutsutype.IJutsuType;
 import com.yshmeel.tenseicraft.common.fighting.jutsutype.WaterJutsuType;
 import com.yshmeel.tenseicraft.common.quests.base.IQuest;
@@ -19,6 +23,7 @@ import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
@@ -42,6 +47,7 @@ public class ModInfo {
     public static void initJutsuTypes() {
         jutsuTypes.put("water", new WaterJutsuType());
         jutsuTypes.put("earth", new EarthJutsuType());
+        jutsuTypes.put("fire", new FireJutsuType());
 
         for (HashMap.Entry<String, IJutsuType> keyValue : jutsuTypes.entrySet()) {
             keyValue.getValue().init();
@@ -132,6 +138,9 @@ public class ModInfo {
 
     @SubscribeEvent
     public static void register(RegistryEvent.Register<EntityEntry> event) {
+        if(FMLCommonHandler.instance().getSide().isClient()) {
+            DialogList.register();
+        }
         ModInfo.initJutsuTypes();
         ModInfo.initJutsu();
         ModInfo.initGenkai();
@@ -163,6 +172,25 @@ public class ModInfo {
                         .tracker(100, 1, true)
                         .build()
         );
+
+        event.getRegistry().register(
+                EntityEntryBuilder.<Entity>create()
+                        .entity(EntityBall.class)
+                        .id(new ResourceLocation("tenseicraft:entity_ball"), entityIds++)
+                        .name("EntityBall")
+                        .tracker(100, 1, true)
+                        .build()
+        );
+
+        event.getRegistry().register(
+                EntityEntryBuilder.<Entity>create()
+                        .entity(EntityWood.class)
+                        .id(new ResourceLocation("tenseicraft:entity_wood"), entityIds++)
+                        .name("EntityWood")
+                        .tracker(100, 1, true)
+                        .build()
+        );
+
 
         EntitySpawnPlacementRegistry.setPlacementType(GeninMob.class, EntityLiving.SpawnPlacementType.ON_GROUND);
         EntitySpawnPlacementRegistry.setPlacementType(NPCMob.class, EntityLiving.SpawnPlacementType.ON_GROUND);

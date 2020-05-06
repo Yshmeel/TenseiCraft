@@ -2,6 +2,8 @@ package com.yshmeel.tenseicraft.client.events;
 
 import com.yshmeel.tenseicraft.client.Keys;
 import com.yshmeel.tenseicraft.client.Sounds;
+import com.yshmeel.tenseicraft.client.dialogs.DialogList;
+import com.yshmeel.tenseicraft.client.dialogs.builder.DialogBuilder;
 import com.yshmeel.tenseicraft.client.gui.InGameInterface;
 import com.yshmeel.tenseicraft.client.gui.NinjaCard;
 import com.yshmeel.tenseicraft.client.render.EyesLayer;
@@ -36,6 +38,7 @@ import java.util.ArrayList;
 public class ClientHandler {
     public static String hiddenInput = "";
     public int activateJutsuCooldown = 0;
+    public int guiIdle = 0;
 
     @SubscribeEvent
     public void playerTick(TickEvent.PlayerTickEvent event) {
@@ -71,6 +74,23 @@ public class ClientHandler {
                         DialogUtils.showDialog("tutorial");
                     }
 
+                }
+            }
+
+            if(guiIdle > 0) {
+                guiIdle--;
+            }
+
+            if(guiIdle == 0) {
+                if(DialogUtils.hasActiveDialog) {
+                    DialogBuilder dialog = DialogList.registeredDialogs.get(DialogUtils.activeDialogName);
+                    if(dialog != null) {
+                        if(!dialog.canSkip) {
+                            DialogUtils.showDialog(dialog);
+                        } else {
+                            DialogUtils.closeDialog();
+                        }
+                    }
                 }
             }
         }
@@ -129,6 +149,10 @@ public class ClientHandler {
         if(Keys.NINJA_CARD_GUI_OPEN.isPressed()) {
             Minecraft.getMinecraft().player.playSound(new SoundEvent(Sounds.NINJA_CARD_OPEN_SOUND), 5.0F, 1.0F);
             Minecraft.getMinecraft().displayGuiScreen(new NinjaCard());
+        }
+
+        if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
+            guiIdle = 5;
         }
 
         if(Keys.JUTSU_COMBO_1.isPressed()) {

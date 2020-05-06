@@ -1,6 +1,7 @@
 package com.yshmeel.tenseicraft.common.entities;
 
 import com.yshmeel.tenseicraft.Tensei;
+import com.yshmeel.tenseicraft.client.dialogs.DialogList;
 import com.yshmeel.tenseicraft.client.utils.DialogUtils;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -47,10 +48,7 @@ public class NPCMob extends EntityCreature {
     public boolean processInteract(EntityPlayer player, EnumHand hand)
     {
         if (this.world.isRemote) {
-            DialogUtils.showDialog("iruka_tutorial", () -> {
-                Tensei.logger.info("on end");
-                return true;
-            });
+            DialogUtils.showDialog(DialogList.IRUKA_TUTORIAL);
             return true;
         }
 

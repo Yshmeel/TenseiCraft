@@ -1,5 +1,7 @@
 package com.yshmeel.tenseicraft.common.packets;
 
+import com.yshmeel.tenseicraft.client.dialogs.Dialog;
+import com.yshmeel.tenseicraft.client.dialogs.DialogList;
 import com.yshmeel.tenseicraft.client.utils.DialogUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.PacketBuffer;
@@ -30,7 +32,11 @@ public class PacketShowCutSceneMessage  extends AbstractMessage<PacketShowCutSce
     @Override
     public void process(EntityPlayer player, Side side) {
         if(side.isClient()) {
-            DialogUtils.showDialog(this.cutsceneId);
+            if(DialogList.registeredDialogs.get(this.cutsceneId) != null) {
+                DialogUtils.showDialog(DialogList.registeredDialogs.get(this.cutsceneId));
+            } else {
+                DialogUtils.showDialog(this.cutsceneId);
+            }
         }
     }
 }

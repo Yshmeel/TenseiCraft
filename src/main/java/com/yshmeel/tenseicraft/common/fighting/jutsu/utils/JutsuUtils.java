@@ -1,11 +1,107 @@
 package com.yshmeel.tenseicraft.common.fighting.jutsu.utils;
 
+import com.yshmeel.tenseicraft.Tensei;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class JutsuUtils {
+    // @todo странный метод, и вообще его бы переписать в будущем
+    public static float[][] getRadiusCircle(World world, BlockPos blockPos) {
+        float[][] positions = {
+            {0,0,0},{0,0,0},{0,0,0},{0,0,0},
+            {0,0,0},{0,0,0},{0,0,0},{0,0,0},
+            {0,0,0},{0,0,0},{0,0,0},{0,0,0},
+            {0,0,0},{0,0,0},{0,0,0},{0,0,0},
+            {0,0,0},{0,0,0},{0,0,0},{0,0,0},
+            {0,0,0},{0,0,0},{0,0,0},{0,0,0},
+            {0,0,0},{0,0,0},{0,0,0},{0,0,0},
+            {0,0,0},{0,0,0},{0,0,0},{0,0,0},
+            {0,0,0},{0,0,0},{0,0,0},{0,0,0},
+            {0,0,0},{0,0,0},{0,0,0},{0,0,0},
+            {0,0,0},{0,0,0},{0,0,0},{0,0,0},
+            {0,0,0},{0,0,0},{0,0,0},{0,0,0},
+            {0,0,0},{0,0,0},{0,0,0},{0,0,0},
+            {0,0,0},{0,0,0},{0,0,0},{0,0,0},
+        };
+
+        int i = 0;
+        int iterations = 0;
+        int distance = 0;
+        boolean generated = false;
+        int radius = 3;
+
+        while(!generated) {
+            positions[i][0] = blockPos.getX();
+            positions[i][1] = blockPos.getY();
+            positions[i][2] = blockPos.getZ();
+            i++;
+
+            positions[i][0] = blockPos.getX() + distance + 1;
+            positions[i][1] = blockPos.getY();
+            positions[i][2] = blockPos.getZ();
+            i++;
+
+            positions[i][0] = blockPos.getX() - distance - 1;
+            positions[i][1] = blockPos.getY();
+            positions[i][2] = blockPos.getZ();
+            i++;
+
+            positions[i][0] = blockPos.getX();
+            positions[i][1] = blockPos.getY();
+            positions[i][2] = blockPos.getZ() + distance + 1;
+            i++;
+
+            positions[i][0] = blockPos.getX();
+            positions[i][1] = blockPos.getY();
+            positions[i][2] = blockPos.getZ() - distance - 1;
+            if(iterations >= 0) {
+                positions[i][0] = blockPos.getX() - distance - 1;
+                positions[i][1] = blockPos.getY();
+                positions[i][2] = blockPos.getZ() + distance + 1;
+                i++;
+
+                positions[i][0] = blockPos.getX() + distance + 1;
+                positions[i][1] = blockPos.getY();
+                positions[i][2] = blockPos.getZ() + distance + 1;
+
+                i++;
+                positions[i][0] = blockPos.getX() + distance + 1;
+                positions[i][1] = blockPos.getY();
+                positions[i][2] = blockPos.getZ() + distance + 1;
+
+                i++;
+                positions[i][0] = blockPos.getX() + distance + 1;
+                positions[i][1] = blockPos.getY();
+                positions[i][2] = blockPos.getZ() - distance - 1;
+
+                i++;
+                positions[i][0] = blockPos.getX() - distance - 1;
+                positions[i][1] = blockPos.getY();
+                positions[i][2] = blockPos.getZ() - distance - 1;
+
+                distance++;
+                i++;
+                positions[i][0] = blockPos.getX() - distance - 1;
+                positions[i][1] = blockPos.getY();
+                positions[i][2] = blockPos.getZ() - distance - 1;
+
+                i++;
+                positions[i][0] = blockPos.getX() - distance - 1;
+                positions[i][1] = blockPos.getY();
+                positions[i][2] = blockPos.getZ() - distance - 1;
+            }
+            distance ++;
+
+            iterations++;
+            if(iterations >= radius) {
+                generated = true;
+            }
+        }
+        return positions;
+    }
     public static float[][][] getBestPositionToWall(World world, BlockPos pos) {
         BlockPos center = pos;
 

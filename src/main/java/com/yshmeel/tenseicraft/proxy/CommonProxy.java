@@ -3,6 +3,7 @@ package com.yshmeel.tenseicraft.proxy;
 import com.yshmeel.tenseicraft.common.EventHandler;
 import com.yshmeel.tenseicraft.common.packets.PacketDispatcher;
 import com.yshmeel.tenseicraft.common.registries.BlockRegistry;
+import com.yshmeel.tenseicraft.common.registries.ItemRegistry;
 import com.yshmeel.tenseicraft.data.player.IPlayer;
 import com.yshmeel.tenseicraft.data.player.Player;
 import com.yshmeel.tenseicraft.data.player.PlayerCapabilityHandler;
@@ -18,6 +19,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 public class CommonProxy {
     public void preInit(FMLPreInitializationEvent event) {
         BlockRegistry.register();
+        ItemRegistry.register();
 
     }
     public void init(FMLInitializationEvent event) {

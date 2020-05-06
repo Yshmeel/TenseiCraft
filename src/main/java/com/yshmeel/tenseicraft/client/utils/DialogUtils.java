@@ -2,9 +2,9 @@ package com.yshmeel.tenseicraft.client.utils;
 
 import com.yshmeel.tenseicraft.Tensei;
 import com.yshmeel.tenseicraft.client.Keys;
-import com.yshmeel.tenseicraft.client.dialogs.FirstReleaseDialog;
-import com.yshmeel.tenseicraft.client.dialogs.IrukaTutorialDialog;
+import com.yshmeel.tenseicraft.client.dialogs.Dialog;
 import com.yshmeel.tenseicraft.client.dialogs.TutorialDialog;
+import com.yshmeel.tenseicraft.client.dialogs.builder.DialogBuilder;
 import com.yshmeel.tenseicraft.client.gui.fonts.DrawFonts;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -14,10 +14,12 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
+import java.util.Objects;
 import java.util.concurrent.Callable;
 
 public class DialogUtils {
     public static boolean hasActiveDialog = false;
+    public static String activeDialogName = "";
     public static int activeDialogId = -1;
     public static String activeDialogMode = "";
 
@@ -67,6 +69,21 @@ public class DialogUtils {
                     .replace("{ninja_card_btn}", Keyboard.getKeyName(Keys.NINJA_CARD_GUI_OPEN.getKeyCode()));
     }
 
+    public static void showDialog(DialogBuilder dialog) {
+        Dialog gui = dialog.generate();
+
+        hasActiveDialog = true;
+        activeDialogName = dialog.dialogId;
+
+        if(DialogUtils.activeDialogId != -1) {
+            gui.currentDialog = DialogUtils.activeDialogId;
+        } else {
+            gui.currentDialog = 0;
+        }
+        Minecraft.getMinecraft().displayGuiScreen(gui);
+
+    }
+
     public static void showDialog(String cutSceneId) {
         showDialog(cutSceneId, null);
     }
@@ -83,24 +100,6 @@ public class DialogUtils {
                     }
                 }
                 break;
-            case "first_release":
-                if(!(Minecraft.getMinecraft().currentScreen instanceof FirstReleaseDialog)) {
-                    if(activeDialogId != -1) {
-                        Minecraft.getMinecraft().displayGuiScreen(new FirstReleaseDialog(activeDialogId));
-                    } else {
-                        Minecraft.getMinecraft().displayGuiScreen(new FirstReleaseDialog());
-                    }
-                }
-                break;
-            case "iruka_tutorial":
-                if(!(Minecraft.getMinecraft().currentScreen instanceof IrukaTutorialDialog)) {
-                    if(activeDialogId != -1) {
-                        Minecraft.getMinecraft().displayGuiScreen(new IrukaTutorialDialog(activeDialogId));
-                    } else {
-                        Minecraft.getMinecraft().displayGuiScreen(new IrukaTutorialDialog(onEnd));
-                    }
-                }
-                break;
             default:
                 hasActiveDialog = false;
                 break;
@@ -110,8 +109,10 @@ public class DialogUtils {
     public static void closeDialog() {
         if(hasActiveDialog) {
             Minecraft.getMinecraft().displayGuiScreen(null);
+            hasActiveDialog = false;
             activeDialogId = -1;
             activeDialogMode = "";
+            activeDialogName = "";
         }
     }
 }

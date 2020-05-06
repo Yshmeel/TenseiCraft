@@ -55,7 +55,7 @@ public class EarthWallJutsu extends Jutsu {
             jutsuEntity.setBlockToSet(Blocks.DIRT);
             world.spawnEntity(jutsuEntity);
 
-            jutsuEntity.shoot(fromPlayer, fromPlayer.rotationPitch, fromPlayer.rotationYaw, 0.0F, 3.0F, 0.0F);
+            jutsuEntity.shoot(fromPlayer, fromPlayer.rotationPitch, fromPlayer.rotationYaw, 0.0F, 1.0F, 0.0F);
             this.afterUseJutsu(fromPlayer, world);
         }
 

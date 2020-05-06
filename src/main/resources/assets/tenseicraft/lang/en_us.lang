@@ -57,13 +57,18 @@ common.jutsu.not_enough_chakra=§cYou don't have enough chakra to use this jutsu
 common.tenseicraft.unexpected_error=§4An error was excepted while managing data, maybe something went wrong. Try again later, or text this probrem in tech support of TenseiCraft.
 
 # JutsuTypes
-common.tensei.jutsutype.not_found=§cThis release is not found.
+common.tensei.jutsutype.not_found=§cThis release was not found.
 common.jutsutypes.water=Water
 common.jutsutypes.earth=Earth
+common.jutsutypes.fire=Fire
 
 # Jutsu
 common.jutsu.water_wall=Water wall
 common.jutsu_water_wall_description=Creates a water wall
 common.jutsu.earth_wall=Earth wall
 common.jutsu_earth_wall_description=Creates a earth wall
+common.jutsu.fire_ball=Fire Ball
+common.jutsu.fire_ball_description=Creates a%nfire ball
+common.jutsu.earth_clone=Earth clone
+common.jutsu.earth_clone_description=Creates earth%nclone
 common.jutsu.clone.kill=Your clone was dead. Info: %1$s

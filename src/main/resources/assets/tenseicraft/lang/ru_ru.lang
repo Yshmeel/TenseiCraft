@@ -60,6 +60,7 @@ common.tenseicraft.unexpected_error=§4Произошла ошибка в обр
 common.tensei.jutsutype.not_found=§cСтихия не найдена.
 common.jutsutypes.water=Вода
 common.jutsutypes.earth=Земля
+common.jutsutypes.fire=Огонь
 
 # Jutsu
 common.jutsu.water_wall=Водяная стена
@@ -68,6 +69,8 @@ common.jutsu.earth_wall=Землянная стена
 common.jutsu.earth_wall_description=Создает землянную%nстену
 common.jutsu.earth_clone=Землянной клон
 common.jutsu.earth_clone_description=Создает землянного%nклона
+common.jutsu.fire_ball=Огненный шар
+common.jutsu.fire_ball_description=Создает маленький%nогненный шар
 common.jutsu.clone.kill=Ваш клон был убит. Информация об убийстве: %1$s
 
 # Cutscenes

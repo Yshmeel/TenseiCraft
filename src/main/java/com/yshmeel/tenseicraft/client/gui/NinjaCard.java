@@ -337,9 +337,13 @@ public class NinjaCard extends GuiScreen {
             );
             Gui.drawModalRectWithCustomSizedTexture(buttonX + 3, buttonY + 4, 0, 0, 25, 25, 25, 25);
             GL11.glPopMatrix();
-
-            this.renderTooltip(buttonX, buttonY, I18n.format(jutsu.getName()),
-                    I18n.format(jutsu.getDescription()), 30, 33);
+            String[] lines = {
+                    I18n.format(jutsu.getName()),
+                    "%n",
+                    I18n.format(jutsu.getDescription()),
+            };
+            this.renderTooltip(buttonX, buttonY, lines,
+                    30, 64);
 
             additionalMargin += 60;
         }
@@ -527,8 +531,8 @@ public class NinjaCard extends GuiScreen {
     }
 
     public void renderTooltip(int x, int y, String[] lines, int width, int height) {
-        if((this.mouseX > x && this.mouseX < x + width
-                && this.mouseY > y && this.mouseY < y + height) && !isTooltipEnabled) {
+        if((this.mouseX > x && this.mouseX < x + 32
+                && this.mouseY > y && this.mouseY < y + 32) && !isTooltipEnabled) {
             GL11.glPushMatrix();
             Gui.drawRect(x, y + 35, x+ 90, y + height + 30, 1711276032);
             int xString = x + 5;

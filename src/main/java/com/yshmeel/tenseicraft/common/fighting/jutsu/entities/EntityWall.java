@@ -21,6 +21,7 @@ public class EntityWall extends EntityThrowable implements IProjectile {
     private float[][][] savedWallPos = null;
     private boolean start = false;
     private Block blockToSet = null;
+    public int timeLimit = 240;
 
     public EntityWall(World worldIn)
     {
@@ -51,10 +52,23 @@ public class EntityWall extends EntityThrowable implements IProjectile {
         this.noClip = false;
     }
 
+    public EntityWall(World worldIn, EntityLivingBase player, float width, float height)
+    {
+        super(worldIn, player);
+
+        this.motionX *= 0.4;
+        this.motionY *= 0.4;
+        this.motionZ *= 0.4;
+        this.setSize(width, height);
+        this.noClip = false;
+    }
+
     public void setBlockToSet(Block block) {
         this.blockToSet = block;
     }
-
+    public void setTimeLimit(int limit) {
+        this.timeLimit = limit*20;
+    }
 
     protected float getGravityVelocity() {
         return 0.00f;
@@ -63,7 +77,7 @@ public class EntityWall extends EntityThrowable implements IProjectile {
     @Override
     protected void onImpact(RayTraceResult result) {
         if( this.blockToSet != null) {
-            if(result.typeOfHit.equals(RayTraceResult.Type.BLOCK)) {
+            if(result.typeOfHit.equals(RayTraceResult.Type.BLOCK) && !this.world.getBlockState(result.getBlockPos()).equals(Blocks.AIR.getDefaultState())) {
                 this.motionX = 0;
                 this.motionY = 0;
                 this.motionZ = 0;
@@ -96,7 +110,7 @@ public class EntityWall extends EntityThrowable implements IProjectile {
         if(this.start) {
             this.ticksInGround++;
 
-            if(this.ticksInGround >= 240) {
+            if(this.ticksInGround >= this.timeLimit) {
                 float[][][] wallPos = this.savedWallPos;
 
                 for(float[][] rowWallCoords : wallPos) {

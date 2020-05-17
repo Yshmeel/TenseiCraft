@@ -38,7 +38,6 @@ public class PacketReplaceTechniqueMessage  extends AbstractMessage<PacketReplac
     }
 
     @Override
-    // @todo Сделать количество техник подмены
     public void process(EntityPlayer player, Side side) {
         if(side.isServer()) {
             IPlayer data = Player.getInstance(player);
@@ -48,7 +47,6 @@ public class PacketReplaceTechniqueMessage  extends AbstractMessage<PacketReplac
                 FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> {
                     BlockPos position = player.getPosition();
                     World world = player.getEntityWorld();
-                    Random rand = new Random();
 
                     int distance = Constants.REPLACE_TECHNIQUE_DISTANCE;
                     float f1 = MathHelper.cos(-player.rotationYaw * 0.017453292F - (float)Math.PI);

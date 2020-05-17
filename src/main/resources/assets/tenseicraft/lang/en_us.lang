@@ -16,6 +16,10 @@ common.tenseicraft.chakra_fill.disabled_force=§cYou feeling a power of full cha
 common.tenseicraft.chakra_fill.enabled=§6You have started to meditate. You feeling that you chakra is filling fast than usually.
 common.tenseicraft.chakra_fill.disabled=§cYou have done with meditate. Chakra started filling slow as usually.
 common.tenseicraft.level_up=§6Congrats, you reached §f%d §6level!
+itemGroup.weapon=§2Weapons
+
+# Items
+item.tenseicraft.items.kunai.name=§cKunai
 
 # Ranks
 common.player.ranks.villager=Villager
@@ -72,3 +76,4 @@ common.jutsu.fire_ball_description=Creates a%nfire ball
 common.jutsu.earth_clone=Earth clone
 common.jutsu.earth_clone_description=Creates earth%nclone
 common.jutsu.clone.kill=Your clone was dead. Info: %1$s
+jutsu.replace.not_enough=§cYou cannot use this right now.

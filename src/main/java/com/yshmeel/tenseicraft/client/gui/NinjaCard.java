@@ -52,7 +52,6 @@ public class NinjaCard extends GuiScreen {
     public NinjaCard() {
         super();
 
-        IPlayer player = Player.getInstance(Minecraft.getMinecraft().player);
         this.skin = AbstractClientPlayer.getLocationSkin(Minecraft.getMinecraft().player.getName());
         AbstractClientPlayer.getDownloadImageSkin(this.skin, Minecraft.getMinecraft().player.getName());
     }

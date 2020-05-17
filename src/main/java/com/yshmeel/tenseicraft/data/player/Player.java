@@ -710,10 +710,7 @@ public class Player implements IPlayer {
 
 
     public static IPlayer getInstance(EntityPlayer player) {
-        if(player == null) return null;
-
         IPlayer data = player.getCapability(PlayerProvider.PLAYER_CAP, null);
-
         data.setPlayerInstance(player);
 
         return data;

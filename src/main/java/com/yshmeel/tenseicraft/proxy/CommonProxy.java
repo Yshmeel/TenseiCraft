@@ -1,5 +1,7 @@
 package com.yshmeel.tenseicraft.proxy;
 
+import com.yshmeel.chatmanager.ChatManager;
+import com.yshmeel.chatmanager.ChatManagerEvents;
 import com.yshmeel.tenseicraft.common.EventHandler;
 import com.yshmeel.tenseicraft.common.packets.PacketDispatcher;
 import com.yshmeel.tenseicraft.common.registries.BlockRegistry;
@@ -25,6 +27,7 @@ public class CommonProxy {
     public void init(FMLInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(new EventHandler());
         MinecraftForge.EVENT_BUS.register(new PlayerCapabilityHandler());
+        MinecraftForge.EVENT_BUS.register(new ChatManagerEvents());
         PacketDispatcher.init();
         CapabilityManager.INSTANCE.register(IPlayer.class, new PlayerStorage(), Player.class);
     }

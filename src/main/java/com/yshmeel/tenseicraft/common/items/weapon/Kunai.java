@@ -36,7 +36,7 @@ public class Kunai extends Item {
 
         EntityKunai entity = new EntityKunai(worldIn, playerIn);
         worldIn.spawnEntity(entity);
-        entity.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.0F, 0.0F);
+        entity.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 0.5F, 2.0F);
         itemstack.shrink(1);
 
         return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemstack);

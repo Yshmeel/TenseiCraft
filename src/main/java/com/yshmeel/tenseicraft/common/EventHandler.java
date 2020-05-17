@@ -1,6 +1,7 @@
 package com.yshmeel.tenseicraft.common;
 
 import com.yshmeel.tenseicraft.Tensei;
+import com.yshmeel.tenseicraft.common.entities.EntityKunai;
 import com.yshmeel.tenseicraft.common.entities.GeninMob;
 import com.yshmeel.tenseicraft.common.fighting.jutsu.entities.clones.EntityClone;
 import com.yshmeel.tenseicraft.common.packets.PacketDispatcher;
@@ -24,6 +25,7 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -125,6 +127,7 @@ public class EventHandler {
         }
     }
 
+    // @fixme переделать выдачу опыта
     @SubscribeEvent
     public void onPlayerKillMob(LivingDeathEvent event) {
         if(!event.getEntity().world.isRemote) {

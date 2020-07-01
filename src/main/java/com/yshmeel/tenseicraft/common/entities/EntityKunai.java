@@ -29,9 +29,9 @@ public class EntityKunai extends EntityThrowable implements IProjectile {
     {
         super(worldIn);
 
-        this.motionX *= 0.4;
-        this.motionY *= 0.4;
-        this.motionZ *= 0.4;
+        this.motionX *= 1.0;
+        this.motionY *= 1.0;
+        this.motionZ *= 1.0;
         this.setSize(0.5F, 0.5F);
         this.noClip = false;
     }
@@ -47,9 +47,9 @@ public class EntityKunai extends EntityThrowable implements IProjectile {
     {
         super(worldIn, player);
 
-        this.motionX *= 0.4;
-        this.motionY *= 0.4;
-        this.motionZ *= 0.4;
+        this.motionX *= 1.0;
+        this.motionY *= 1.0;
+        this.motionZ *= 1.0;
         this.setSize(0.5F, 0.5F);
         this.noClip = false;
     }

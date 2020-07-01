@@ -156,18 +156,18 @@ public class ClientHandler {
         }
 
         if(Keys.JUTSU_COMBO_1.isPressed()) {
-            if(JutsuUtils.canWriteToHidden(this.hiddenInput, Keys.JUTSU_COMBO_1)) {
-                this.hiddenInput += KeyboardUtils.getKeyName(Keys.JUTSU_COMBO_1) + " ";
+            if(JutsuUtils.canWriteToHidden(hiddenInput, Keys.JUTSU_COMBO_1)) {
+                hiddenInput += KeyboardUtils.getKeyName(Keys.JUTSU_COMBO_1) + " ";
             } else {
-                this.hiddenInput = "";
+                hiddenInput = "";
             }
         }
 
         if(Keys.JUTSU_COMBO_2.isPressed()) {
-            if(JutsuUtils.canWriteToHidden(this.hiddenInput, Keys.JUTSU_COMBO_2)) {
-                this.hiddenInput += KeyboardUtils.getKeyName(Keys.JUTSU_COMBO_2) + " ";
+            if(JutsuUtils.canWriteToHidden(hiddenInput, Keys.JUTSU_COMBO_2)) {
+                hiddenInput += KeyboardUtils.getKeyName(Keys.JUTSU_COMBO_2) + " ";
             } else {
-                this.hiddenInput = "";
+                hiddenInput = "";
             }
         }
     }
@@ -176,18 +176,19 @@ public class ClientHandler {
     public void guiOpen(RenderGameOverlayEvent.Pre event)
     {
         ScaledResolution resolution = new ScaledResolution(Minecraft.getMinecraft());
+        InGameInterface hud = new InGameInterface();
         if(event.getType().equals(RenderGameOverlayEvent.ElementType.ALL)) {
             Minecraft.getMinecraft().mcProfiler.startSection("air");
-            new InGameInterface().render(event);
+            hud.render(event);
             Minecraft.getMinecraft().mcProfiler.endSection();
         }
         if (event.getType().equals(RenderGameOverlayEvent.ElementType.HOTBAR)) {
             event.setCanceled(true);
-            new InGameInterface().renderHotBar(event);
+            hud.renderHotBar(event);
         }
         if (event.getType().equals(RenderGameOverlayEvent.ElementType.FOOD) || event.getType().equals(RenderGameOverlayEvent.ElementType.EXPERIENCE)) {
             event.setCanceled(true);
-            new InGameInterface().renderPlayerStats(event);
+            hud.renderPlayerStats(event);
         }
         if (event.getType().equals(RenderGameOverlayEvent.ElementType.HEALTH)) {
             event.setCanceled(true);

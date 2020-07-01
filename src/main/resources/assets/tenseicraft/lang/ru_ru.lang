@@ -16,6 +16,10 @@ common.tenseicraft.chakra_control.disabled_force=§cУ вас закончила
 common.tenseicraft.chakra_fill.disabled_force=§cВы чувствуете прилив силы. Вы перестали накаплиать чакру.
 common.tenseicraft.chakra_fill.enabled=§6Вы начали накапливать чакру. Чакра начала пополняться быстрее.
 common.tenseicraft.chakra_fill.disabled=§cВы перестали накапливать чакру. Чакра начала пополняться медленее.
+itemGroup.weapon=§2Оружия
+
+# Items
+item.tenseicraft.items.kunai.name=§cКунай
 
 # Ranks
 common.player.ranks.villager=Житель
@@ -72,6 +76,7 @@ common.jutsu.earth_clone_description=Создает землянного%nкло
 common.jutsu.fire_ball=Огненный шар
 common.jutsu.fire_ball_description=Создает маленький%nогненный шар
 common.jutsu.clone.kill=Ваш клон был убит. Информация об убийстве: %1$s
+jutsu.replace.not_enough=§cВы пока не можете использовать это.
 
 # Cutscenes
 dialogs.common.next=Далее

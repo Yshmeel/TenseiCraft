@@ -1,5 +1,6 @@
 package com.yshmeel.tenseicraft;
 
+import com.yshmeel.chatmanager.ChatManager;
 import com.yshmeel.tenseicraft.client.gui.fonts.DrawFonts;
 import com.yshmeel.tenseicraft.common.commands.*;
 import com.yshmeel.tenseicraft.common.fighting.jutsu.IJutsu;
@@ -51,6 +52,8 @@ public class Tensei
     @Mod.Instance
     public static Tensei instance;
 
+    public static ChatManager chatManager;
+
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
@@ -76,6 +79,9 @@ public class Tensei
         if(FMLCommonHandler.instance().getSide().equals(Side.CLIENT)) {
             fonts.registerFonts();
         }
+
+        // Registration of chat manager
+        chatManager = new ChatManager();
     }
 
     @EventHandler
